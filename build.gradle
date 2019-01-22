@@ -15,10 +15,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
 
-jacoco {
-toolVersion = "0.7.6.201602180812"
-reportsDir = file("$buildDir/jacoco/")
-}
+
 
 group = 'com.ceiba.estacionamiento.jenniffer.alvarez'
 version = '0.0.1-SNAPSHOT'
@@ -35,13 +32,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
-// systemProperties 'property': 'value'
-jacoco {
-append = false
-destinationFile = file("jacoco/jacocoTest.exec")
+
+/stage('Static Code Analysis') {
+steps{
+echo "------------->> Static Code Analysis has started <<--------------"
+withSonarQubeEnv('Sonar') {
+sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
 }
-reports.junitXml.destination = file ("jacoco/test-results")
 }
-jacocoTestReport.dependsOn(test)
 
