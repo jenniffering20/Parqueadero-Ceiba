@@ -13,6 +13,12 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+
+jacoco {
+toolVersion = "0.7.6.201602180812"
+reportsDir = file("$buildDir/jacoco/")
+}
 
 group = 'com.ceiba.estacionamiento.jenniffer.alvarez'
 version = '0.0.1-SNAPSHOT'
@@ -28,3 +34,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+test {
+// systemProperties 'property': 'value'
+jacoco {
+append = false
+destinationFile = file("jacoco/jacocoTest.exec")
+}
+reports.junitXml.destination = file ("jacoco/test-results")
+}
+jacocoTestReport.dependsOn(test)
+

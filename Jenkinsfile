@@ -32,8 +32,8 @@ pipeline {
 					submoduleCfg: [], 
 					userRemoteConfigs: 
 						[[
-							credentialsId: 'GitHub_manuelaoc', 
-							url: 'https://github.com/manuelaoc/Ceiba-Estacionamiento.git'
+							credentialsId: 'GitHub_jenniffering20', 
+							url: 'https://github.com/jenniffering20/Parqueadero-Ceiba.git'
 						]]])
 						
 					sh 'gradle clean'
@@ -91,7 +91,7 @@ pipeline {
 	 
 	 	failure {
 	 		echo 'This will run only if failed'
-	 		mail (to: 'manuela.osorio@ceiba.com.co',
+	 		mail (to: 'jenniffer.alvarez@ceiba.com.co',
 			      subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
 			      body: "Something is wrong with ${env.BUILD_URL}")
 	 	}
