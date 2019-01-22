@@ -6,13 +6,12 @@ import org.junit.Test;
 
 import com.ceiba.estacionamiento.jenniffer.alvarez.Person;
 
-public class ApplicationTestsTest {
+public class person {
 
 	@Test
-	public void canConstructPersonWithAName() {
-		
-		Person person=new Person("Larry");
-		assertEquals("Larry",person.getName());
+	public void test() {
+		Person persona= new Person("jenny");
+		assertEquals("jenny",persona.getName());
 	}
 
 }
