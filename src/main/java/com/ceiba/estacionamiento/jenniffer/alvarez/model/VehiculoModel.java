@@ -12,16 +12,14 @@ public class VehiculoModel {
 	
 	private String tipo;
 	private String placa;
-	private String cilindraje;
+	private int cilindraje;
 	private Date fechaIngreso;
 	private Date fechaSalida;
 	
-	public VehiculoModel(String tipo,String placa,String cilindraje,Date fechaIngreso,Date fechaSalida) {
+	public VehiculoModel(String tipo,String placa,int cilindraje) {
 		this.tipo=tipo;
 		this.placa=placa;
 		this.cilindraje=cilindraje;
-		this.fechaIngreso=fechaIngreso;
-		this.fechaSalida=fechaSalida;
 	}
 
 	public String getId() {
@@ -48,11 +46,11 @@ public class VehiculoModel {
 		this.placa = placa;
 	}
 
-	public String getCilindraje() {
+	public int getCilindraje() {
 		return cilindraje;
 	}
 
-	public void setCilindraje(String cilindraje) {
+	public void setCilindraje(int cilindraje) {
 		this.cilindraje = cilindraje;
 	}
 
@@ -71,5 +69,12 @@ public class VehiculoModel {
 	public void setFechaSalida(Date fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
+
+	@Override
+	public String toString() {
+		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa + ", cilindraje=" + cilindraje
+				+ ", fechaIngreso=" + fechaIngreso + ", fechaSalida=" + fechaSalida + "]";
+	}
+	
 	
 }
