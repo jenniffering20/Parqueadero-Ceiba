@@ -27,21 +27,21 @@ public class ApplicationTests {
 	@Autowired
 	private Controller controller;
 	
-//	@Test 
-//	public void findAllvehiculos() {
-//		repositorio.findAll().forEach(VehiculoModel ->{
-//			LOGGER.info("{}",VehiculoModel);
-//		});	
-//	}
+	
+	
+	
 	
 	@Test 
 	public void AñadirVehiculo() {
-		VehiculoModel vehiculoReal = controller.postVehiculo(new VehiculoModel("Carro","stj589",545));
 		VehiculoModel  vehiculoEsperado = new VehiculoModel("Carro","stj589",545);
-		
+		VehiculoModel vehiculoReal = controller.postVehiculo(vehiculoEsperado);	
 		assertEquals(vehiculoEsperado.getPlaca(),vehiculoReal.getPlaca());
-		
+		assertEquals(vehiculoEsperado.getTipo(),vehiculoReal.getTipo());	
 	}
+	
+	
+	
+	
 
 
 	

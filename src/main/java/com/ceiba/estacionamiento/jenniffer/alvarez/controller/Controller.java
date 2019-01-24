@@ -8,9 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -22,6 +23,7 @@ public class Controller {
 	@Autowired
 	Repositorio repositorio;
 	
+
 	
 	@PostMapping("/Estacionamiento/Anadir")
 	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo){
@@ -30,10 +32,16 @@ public class Controller {
 		VehiculoModel vehiculos= repositorio.insert(new VehiculoModel(
 				vehiculo.getTipo(),vehiculo.getPlaca(),vehiculo.getCilindraje()));
 		System.out.println(vehiculos.getId());
+		System.out.println(vehiculos.getPlaca());
 		
 		return vehiculos;
-		
-		
 	}
+	
+
+	
+	
+	
+	
+	
 }
 

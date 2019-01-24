@@ -4,12 +4,10 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="Estacionamiento")
-
+@Document(collection="Estacionamientoo")
 public class VehiculoModel {
 	@Id
 	private String id;
-	
 	private String tipo;
 	private String placa;
 	private int cilindraje;
