@@ -15,7 +15,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 @CrossOrigin("*")
 public class Controller {
 
@@ -31,10 +31,11 @@ public class Controller {
 		
 		VehiculoModel vehiculos= repositorio.insert(new VehiculoModel(
 				vehiculo.getTipo(),vehiculo.getPlaca(),vehiculo.getCilindraje()));
+		
 		System.out.println(vehiculos.getId());
 		System.out.println(vehiculos.getPlaca());
-		
 		return vehiculos;
+		
 	}
 	
 

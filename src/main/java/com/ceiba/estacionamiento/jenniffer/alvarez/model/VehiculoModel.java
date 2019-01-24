@@ -18,6 +18,12 @@ public class VehiculoModel {
 		this.placa=placa;
 		this.cilindraje=cilindraje;
 	}
+	
+	
+	public VehiculoModel() {
+		
+	}
+
 
 	public String getId() {
 		return id;
@@ -56,8 +62,7 @@ public class VehiculoModel {
 
 	@Override
 	public String toString() {
-		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa + ", cilindraje=" + cilindraje
-				+ ", fechaIngreso=" ;
+		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa + ", cilindraje=" + cilindraje ;
 	}
 	
 	
