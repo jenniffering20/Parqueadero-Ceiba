@@ -4,7 +4,7 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="vehiculo")
+@Document(collection="Estacionamiento")
 
 public class VehiculoModel {
 	@Id
@@ -13,8 +13,7 @@ public class VehiculoModel {
 	private String tipo;
 	private String placa;
 	private int cilindraje;
-	private Date fechaIngreso;
-	private Date fechaSalida;
+	
 	
 	public VehiculoModel(String tipo,String placa,int cilindraje) {
 		this.tipo=tipo;
@@ -54,26 +53,13 @@ public class VehiculoModel {
 		this.cilindraje = cilindraje;
 	}
 
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
-	public Date getFechaSalida() {
-		return fechaSalida;
-	}
-
-	public void setFechaSalida(Date fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa + ", cilindraje=" + cilindraje
-				+ ", fechaIngreso=" + fechaIngreso + ", fechaSalida=" + fechaSalida + "]";
+				+ ", fechaIngreso=" ;
 	}
 	
 	

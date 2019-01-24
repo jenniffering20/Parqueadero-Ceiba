@@ -22,14 +22,6 @@ public class Controller {
 	@Autowired
 	Repositorio repositorio;
 	
-	@GetMapping("/AllVehiculos")
-	public List<VehiculoModel> getAllVehiculos(){
-		System.out.println("Get all vehiculos...");
-		
-		List<VehiculoModel> vehiculos = new ArrayList<>();
-		repositorio.findAll().forEach(vehiculos::add);
-		return vehiculos;
-	}
 	
 	@PostMapping("/Estacionamiento/Anadir")
 	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo){
@@ -37,7 +29,11 @@ public class Controller {
 		
 		VehiculoModel vehiculos= repositorio.insert(new VehiculoModel(
 				vehiculo.getTipo(),vehiculo.getPlaca(),vehiculo.getCilindraje()));
+		System.out.println(vehiculos.getId());
+		
 		return vehiculos;
+		
+		
 	}
 }
 

@@ -11,6 +11,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.controller.Controller;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 
 
 
@@ -38,7 +39,7 @@ public class ApplicationTests {
 		VehiculoModel vehiculoReal = controller.postVehiculo(new VehiculoModel("Carro","stj589",545));
 		VehiculoModel  vehiculoEsperado = new VehiculoModel("Carro","stj589",545);
 		
-		assertEquals(vehiculoEsperado,vehiculoReal);
+		assertEquals(vehiculoEsperado.getPlaca(),vehiculoReal.getPlaca());
 		
 	}
 
