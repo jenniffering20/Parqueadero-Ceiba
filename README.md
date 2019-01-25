@@ -23,7 +23,7 @@ public void deleteVehiculo(@PathVariable ObjectId id) {
 }
 # POST
 @RequestMapping(value = "/", method = RequestMethod.POST)
-public VehiculoModel createPet(@Valid @RequestBody VehiculoModel vehiculoModel) {
+public VehiculoModel createVehiculo(@Valid @RequestBody VehiculoModel vehiculoModel) {
   vehiculoModel.getId(ObjectId.get());
   repositorio.save(pets);
   return vehiculoModel;
