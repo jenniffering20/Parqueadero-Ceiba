@@ -33,8 +33,9 @@ public class ApplicationTests {
 	
 	@Test 
 	public void AñadirVehiculo() {
-		VehiculoModel  vehiculoEsperado = new VehiculoModel("Carro","stj589",545);
+		VehiculoModel  vehiculoEsperado = new VehiculoModel("Carro","stj589");
 		VehiculoModel vehiculoReal = controller.postVehiculo(vehiculoEsperado);	
+		
 		assertEquals(vehiculoEsperado.getPlaca(),vehiculoReal.getPlaca());
 		assertEquals(vehiculoEsperado.getTipo(),vehiculoReal.getTipo());	
 	}

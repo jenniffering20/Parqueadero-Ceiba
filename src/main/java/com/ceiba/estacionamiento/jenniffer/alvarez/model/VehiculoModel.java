@@ -1,6 +1,8 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.model;
 
 import java.util.Date;
+
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,15 +10,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class VehiculoModel {
 	@Id
 	private String id;
+	
 	private String tipo;
 	private String placa;
-	private int cilindraje;
 	
 	
-	public VehiculoModel(String tipo,String placa,int cilindraje) {
+	
+	public VehiculoModel(String tipo,String placa) {
 		this.tipo=tipo;
 		this.placa=placa;
-		this.cilindraje=cilindraje;
+		
 	}
 	
 	
@@ -24,14 +27,15 @@ public class VehiculoModel {
 		
 	}
 
-
 	public String getId() {
 		return id;
 	}
 
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	public String getTipo() {
 		return tipo;
@@ -49,20 +53,12 @@ public class VehiculoModel {
 		this.placa = placa;
 	}
 
-	public int getCilindraje() {
-		return cilindraje;
-	}
-
-	public void setCilindraje(int cilindraje) {
-		this.cilindraje = cilindraje;
-	}
-
-	
 	
 
+	
 	@Override
 	public String toString() {
-		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa + ", cilindraje=" + cilindraje ;
+		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa;
 	}
 	
 	
