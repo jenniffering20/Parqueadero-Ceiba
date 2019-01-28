@@ -1,8 +1,12 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.controller;
 
 
+import com.ceiba.estacionamiento.jenniffer.alvarez.Implement.ParkingImp;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
+import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
+import com.ceiba.estacionamiento.jenniffer.alvarez.service.VehiculoService;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
@@ -29,22 +33,25 @@ public class Controller {
 	@Autowired
 	Repositorio repositorio;
 	
+	
+	ParkingService vehiculoService = new ParkingImp();
 
 	//POST
 	@PostMapping("/Estacionamiento/Anadir")
-	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo){
-		System.out.println("añadiendo vehiculo...");
-		
-		VehiculoModel vehiculos= repositorio.insert(new VehiculoModel(
-				vehiculo.getTipo(),vehiculo.getPlaca()));
+	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo) {
+		VehiculoModel vehiculoInsert = vehiculoService.checkIn(vehiculo.getTipo(),vehiculo.getPlaca());
+		if(vehiculoInsert != null) {
+		VehiculoModel vehiculos = repositorio.save(vehiculoInsert);
 		return vehiculos;
+		}
+		return null;
 	}
 	
 	//GET
 	@RequestMapping(value = "/Estacionamiento/Vehiculos", method = RequestMethod.GET) 
 	public List<VehiculoModel> getAllVehiculos() { 
 		return repositorio.findAll();
-		}
+		} //COREGIR ERROR
 	
 	@RequestMapping(value = "/Estacionamiento/Vehiculos/{id}", method = RequestMethod.GET)
 	public ResponseEntity<VehiculoModel> getById(@PathVariable("id") String id){
@@ -54,12 +61,11 @@ public class Controller {
 		}
 	
 	//PUT
-	@RequestMapping(value ="/Estacionamiento/EditVehiculos", method = RequestMethod.PUT)
+	@RequestMapping(value ="/Estacionamiento/EditVehiculos/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<VehiculoModel> upDateVehiculo(@PathVariable("id") String id, 
-			@Valid @RequestBody VehiculoModel vehiculoModel ){
+			@Valid @RequestBody VehiculoModel vehiculoModel){
 		
-		return repositorio.findById(id)
-				.map(vehiculos -> {
+		return repositorio.findById(id).map(vehiculos -> {
 					vehiculos.setPlaca(vehiculoModel.getPlaca());
 					VehiculoModel upDateVehiculo = repositorio.save(vehiculos);
 					return ResponseEntity.ok().body(upDateVehiculo);
@@ -68,7 +74,14 @@ public class Controller {
 	}
 
 	//DELETE 
-	
+	@RequestMapping(value ="/Estacionamiento/salidaVehiculo/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> salidaVehiculo(@PathVariable("id") String id){
+		return repositorio.findById(id)
+				.map(vehiculo -> {
+					repositorio.deleteById(id);
+					return ResponseEntity.ok().build();
+				}).orElse(ResponseEntity.notFound().build());
+	}
 	
 	
 	

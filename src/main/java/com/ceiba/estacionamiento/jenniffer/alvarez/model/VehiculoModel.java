@@ -1,8 +1,11 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,22 +13,31 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class VehiculoModel {
 	@Id
 	private String id;
-	
 	private String tipo;
 	private String placa;
-	
-	
+	private int cilindraje;
+	private LocalDateTime fechaIngreso;
+	private LocalDateTime fechaSalida;
+	private BigDecimal totalPago;
+
 	
 	public VehiculoModel(String tipo,String placa) {
 		this.tipo=tipo;
-		this.placa=placa;
+		this.placa=placa;	
+	
+	}
+public VehiculoModel() {
 		
 	}
 	
-	
-	public VehiculoModel() {
-		
+	public LocalDateTime getFechaIngreso() {
+		return fechaIngreso;
 	}
+
+	public void setFechaIngreso(LocalDateTime localDateTime) {
+		this.fechaIngreso = localDateTime;
+	}
+
 
 	public String getId() {
 		return id;
@@ -35,7 +47,6 @@ public class VehiculoModel {
 	public void setId(String id) {
 		this.id = id;
 	}
-
 
 	public String getTipo() {
 		return tipo;
@@ -53,7 +64,6 @@ public class VehiculoModel {
 		this.placa = placa;
 	}
 
-	
 
 	
 	@Override
