@@ -5,16 +5,10 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.Implement.ParkingImp;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
-import com.ceiba.estacionamiento.jenniffer.alvarez.service.VehiculoService;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
-
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +38,7 @@ public class Controller {
 		VehiculoModel vehiculos = repositorio.save(vehiculoInsert);
 		return vehiculos;
 		}
+		System.out.println("El vehiculo ya existe");
 		return null;
 	}
 	

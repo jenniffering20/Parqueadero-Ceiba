@@ -5,14 +5,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Estacionamientoo")
 public class VehiculoModel {
 	@Id
-	private String id;
+	private String registro;
 	private String tipo;
 	private String placa;
 	private int cilindraje;
@@ -40,12 +39,12 @@ public VehiculoModel() {
 
 
 	public String getId() {
-		return id;
+		return registro;
 	}
 
 
 	public void setId(String id) {
-		this.id = id;
+		this.registro = id;
 	}
 
 	public String getTipo() {
@@ -68,7 +67,7 @@ public VehiculoModel() {
 	
 	@Override
 	public String toString() {
-		return "VehiculoModel [id=" + id + ", tipo=" + tipo + ", placa=" + placa;
+		return "VehiculoModel [id=" + registro + ", tipo=" + tipo + ", placa=" + placa;
 	}
 	
 	
