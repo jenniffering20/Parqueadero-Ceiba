@@ -127,15 +127,14 @@ public class ParkingImp implements ParkingService {
 	}
 
 
-/*
+
 	@Override
-	public ResponseEntity<VehiculoModel> findVehiculo(String id) {
-		return repositorio.findById(id)
-				.map(vehiculoModel -> ResponseEntity.ok().body(vehiculoModel))
-				.orElse(ResponseEntity.notFound().build());
+	public VehiculoModel findVehiculo(String placa) {
+		return repositorio.findByPlaca(placa);
+				
 	}
 
-*/	
+
 
 	
 

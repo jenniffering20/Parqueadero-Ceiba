@@ -16,6 +16,7 @@ public interface ParkingService {
 	public Boolean fullParking(String tipo);
 	public Boolean validDate(LocalDateTime dateCheckIn);
 	public void reduceAvailability(String tipo);
+	public VehiculoModel findVehiculo(String id);
 	
 	
 

@@ -29,7 +29,6 @@ public class Controller {
 	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo) {
 		VehiculoModel vehiculoInsert = vehiculoService.checkIn(vehiculo.getTipo(),vehiculo.getPlaca());
 		if(vehiculoInsert != null) {
-			System.out.println("hjufgjsdg");
 			return vehiculoInsert;
 			}
 		return null;
@@ -37,12 +36,12 @@ public class Controller {
 	
 	//GET
 	
-/*	@RequestMapping(value = "/Estacionamiento/Vehiculos/{id}", method = RequestMethod.GET)
-	public ResponseEntity<VehiculoModel>  getById(@PathVariable("id") String id){
-		return vehiculoService.findVehiculo(id);
+	@RequestMapping(value = "/Estacionamiento/Vehiculos/{placa}", method = RequestMethod.GET)
+	public VehiculoModel  getById(@PathVariable("placa") String placa){
+		return vehiculoService.findVehiculo(placa);
 		}
 	
- * 
+/* 
  * @RequestMapping(value = "/Estacionamiento/Vehiculos", method = RequestMethod.GET) 
 	public List<VehiculoModel> getAllVehiculos() { 
 		return repositorio.findAll();

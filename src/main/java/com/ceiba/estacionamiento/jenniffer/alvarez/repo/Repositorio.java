@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Repositorio extends MongoRepository<VehiculoModel,String>{
-	 
-	 
+	public VehiculoModel findByPlaca(String placa);
+	
 }
