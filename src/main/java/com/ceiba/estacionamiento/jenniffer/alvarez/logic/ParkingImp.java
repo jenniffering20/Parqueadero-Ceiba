@@ -1,11 +1,29 @@
-package com.ceiba.estacionamiento.jenniffer.alvarez.Implement;
+package com.ceiba.estacionamiento.jenniffer.alvarez.logic;
 
 
 import java.time.LocalDateTime;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-
+@RestController
+@RequestMapping("/")
+@CrossOrigin("*")
 public class ParkingImp implements ParkingService {
 	
 
@@ -15,6 +33,8 @@ public class ParkingImp implements ParkingService {
 	static String MESSAGE_NO_AUTHORIZATION="No esta autorizado para ingresar";
 	static final String LETRA_RESTRICCION="A";
 	
+	@Autowired
+	Repositorio repositorio;
 	
 	public ParkingImp() {
 		 
@@ -35,11 +55,11 @@ public class ParkingImp implements ParkingService {
 					return null;
 				}
 			}
-			VehiculoModel newVehiculo =  new  VehiculoModel(tipo,placa);
+			VehiculoModel newVehiculo =new  VehiculoModel(tipo,placa);
 			newVehiculo.setFechaIngreso(day);
+			VehiculoModel vehiculos = repositorio.save(newVehiculo);
 			reduceAvailability(tipo);
-			return newVehiculo;			
-		
+			return vehiculos;			
 		}
 		}
 		
@@ -106,7 +126,16 @@ public class ParkingImp implements ParkingService {
 		System.out.println(FULL_MOTOS);
 	}
 
-	
+
+/*
+	@Override
+	public ResponseEntity<VehiculoModel> findVehiculo(String id) {
+		return repositorio.findById(id)
+				.map(vehiculoModel -> ResponseEntity.ok().body(vehiculoModel))
+				.orElse(ResponseEntity.notFound().build());
+	}
+
+*/	
 
 	
 
