@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
+import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,11 +31,15 @@ public class ParkingImp implements ParkingService {
 	static int FULL_CARROS=20;
 	static int FULL_MOTOS=10;
 	static String FULL_MESSAGE="El estacionamiento no tiene espacio disponible";
+	static String REGISTERED_MESSAGE="la Placa ya se encuentra registrada, verificar";
 	static String MESSAGE_NO_AUTHORIZATION="No esta autorizado para ingresar";
 	static final String LETRA_RESTRICCION="A";
 	
 	@Autowired
 	Repositorio repositorio;
+	
+	
+	
 	
 	public ParkingImp() {
 		 
@@ -55,32 +60,27 @@ public class ParkingImp implements ParkingService {
 					return null;
 				}
 			}
+			if(findVehiculo(placa) == null) {
 			VehiculoModel newVehiculo =new  VehiculoModel(tipo,placa);
 			newVehiculo.setFechaIngreso(day);
 			VehiculoModel vehiculos = repositorio.save(newVehiculo);
 			reduceAvailability(tipo);
-			return vehiculos;			
+			return vehiculos;	
+			}else System.out.println(REGISTERED_MESSAGE);
+			return null;
+			
 		}
 		}
 		
 
-
-
 	@Override
-	public void checkOut(long tiempo, String tipo) {
-		// TODO Auto-generated method stub
-		
+	public void checkOut(String placa) {
+		VehiculoModel vehiculoToLeave = findVehiculo(placa);
+		if(findVehiculo(placa) != null) {
+			BillService bill = new Bill();
+		}
+	
 	}
-
-
-
-	@Override
-	public long totalTime() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
 
 	@Override
 	public Boolean restrictionLetter(String placa) {
@@ -101,9 +101,7 @@ public class ParkingImp implements ParkingService {
 			full= true;
 		
 		return full;
-
 	}
-
 
 
 	@Override
@@ -127,11 +125,25 @@ public class ParkingImp implements ParkingService {
 	}
 
 
-
 	@Override
 	public VehiculoModel findVehiculo(String placa) {
 		return repositorio.findByPlaca(placa);
 				
+	}
+
+
+
+	@Override
+	public List<VehiculoModel> registeredVehicle(String tipo, String id) {
+		List<VehiculoModel> vehiculos= vehicles(tipo);
+		return vehiculos;
+	}
+
+
+
+	@Override
+	public List<VehiculoModel> vehicles(String tipo) {	
+		return repositorio.findByTipo(tipo);
 	}
 
 

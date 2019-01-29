@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
 	@Autowired
-	ParkingService vehiculoService;
+	ParkingService parkingService;
 
 	//POST
 	@PostMapping("/Estacionamiento/Anadir")
 	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo) {
-		VehiculoModel vehiculoInsert = vehiculoService.checkIn(vehiculo.getTipo(),vehiculo.getPlaca());
+		VehiculoModel vehiculoInsert = parkingService.checkIn(vehiculo.getTipo(),vehiculo.getPlaca());
 		if(vehiculoInsert != null) {
 			return vehiculoInsert;
 			}
@@ -37,8 +37,8 @@ public class Controller {
 	//GET
 	
 	@RequestMapping(value = "/Estacionamiento/Vehiculos/{placa}", method = RequestMethod.GET)
-	public VehiculoModel  getById(@PathVariable("placa") String placa){
-		return vehiculoService.findVehiculo(placa);
+	public VehiculoModel  getByPlaca(@PathVariable("placa") String placa){
+		return parkingService.findVehiculo(placa);
 		}
 	
 /* 
