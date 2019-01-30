@@ -28,7 +28,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class ParkingImp implements ParkingService {
 	
 
-	static int FULL_CARROS=20;
+	int fullCarros = 20;
+	
+	public int getFullCarros() {
+		return fullCarros;
+	}
+	
+	public void setFullCarros(int NumeroVehiculos) {
+		fullCarros = NumeroVehiculos;
+	}
+	
+	public int FULL_CARROS= getFullCarros();
 	static int FULL_MOTOS=10;
 	static String FULL_MESSAGE="El estacionamiento no tiene espacio disponible";
 	static String REGISTERED_MESSAGE="la Placa ya se encuentra registrada, verificar";
@@ -83,8 +93,8 @@ public class ParkingImp implements ParkingService {
 	
 	}
 
-	@Override
-	public Boolean restrictionLetter(String placa) {
+	
+	private Boolean restrictionLetter(String placa) {
 		Boolean letter= placa.toUpperCase().startsWith(LETRA_RESTRICCION);
 		 boolean restriction = (letter)? true: false; 
 		return restriction;
@@ -92,21 +102,25 @@ public class ParkingImp implements ParkingService {
 
 
 
-	@Override
+	
 	public Boolean fullParking(String tipo) {
 		Boolean full=false;
-		full=(FULL_CARROS== 0 && FULL_MOTOS==0)?true:false;
-		if(tipo.equalsIgnoreCase("CARRO") && FULL_CARROS== 0)
+		full = (getFullCarros() == 0 && FULL_MOTOS == 0) ? true:false;
+		
+		if(tipo.equalsIgnoreCase("CARRO") && getFullCarros()== 0) {
 			full= true;
-		if(tipo.equalsIgnoreCase("MOTO") && FULL_MOTOS== 0)
+		}
+			
+		if(tipo.equalsIgnoreCase("MOTO") && FULL_MOTOS== 0) {
 			full= true;
+		}
 		
 		return full;
 	}
 
 
-	@Override
-	public Boolean validDate(LocalDateTime dateCheckIn) {
+	
+	private Boolean validDate(LocalDateTime dateCheckIn) {
 		Boolean validDate = (dateCheckIn.getDayOfWeek().getValue()==1 ||dateCheckIn.getDayOfWeek().getValue()==0)
 				? false: true;
 		return validDate;
@@ -114,14 +128,18 @@ public class ParkingImp implements ParkingService {
 
 
 
-	@Override
-	public void reduceAvailability(String tipo) {
-		if(tipo.equalsIgnoreCase("CARRO"))
-			FULL_CARROS-=1;
-		else
+	private void reduceAvailability(String tipo) {
+		
+		if(tipo.equalsIgnoreCase("CARRO")) {
+			int catidadVehiculos = getFullCarros();
+			setFullCarros(catidadVehiculos - 1 );
+		}
+		
+		else {
 			FULL_MOTOS-=1;
-	
-		System.out.println(FULL_CARROS);
+		}
+		
+		System.out.println(getFullCarros());
 		System.out.println(FULL_MOTOS);
 	}
 
