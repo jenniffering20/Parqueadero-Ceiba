@@ -26,12 +26,16 @@ public class Controller {
 
 	//POST
 	@PostMapping("/Estacionamiento/Anadir")
-	public VehiculoModel postVehiculo(@RequestBody VehiculoModel vehiculo) {
-		VehiculoModel vehiculoInsert = parkingService.checkIn(vehiculo);
-		if(vehiculoInsert != null) {
-			return vehiculoInsert;
-			}
-		return null;
+	public void postVehiculo(@RequestBody VehiculoModel vehiculo) {
+		VehiculoModel vehiculoInsert;
+		try {
+			vehiculoInsert = parkingService.checkIn(vehiculo);
+			
+		} catch (Exception e) {
+			
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	//GET

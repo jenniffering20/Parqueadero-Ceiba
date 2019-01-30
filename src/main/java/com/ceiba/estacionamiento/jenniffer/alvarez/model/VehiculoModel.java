@@ -17,9 +17,10 @@ public class VehiculoModel {
 	private BigDecimal totalPago;
 
 	
-	public VehiculoModel(String tipo,String placa) {
+	public VehiculoModel(String tipo,String placa,int cilindraje) {
 		this.tipo=tipo;
 		this.placa=placa;	
+		this.cilindraje= cilindraje;
 	
 	}
 public VehiculoModel() {
