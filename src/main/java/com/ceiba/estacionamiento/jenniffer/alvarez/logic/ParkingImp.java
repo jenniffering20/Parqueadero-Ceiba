@@ -48,23 +48,23 @@ public class ParkingImp implements ParkingService {
 	
 
 	@Override
-	public VehiculoModel checkIn(String tipo, String placa) {
+	public VehiculoModel checkIn(VehiculoModel vehiculo) {
 		LocalDateTime day = LocalDateTime.now();
-		if(fullParking(tipo)) { 
+		if(fullParking(vehiculo.getTipo())) { 
 			System.out.println(FULL_MESSAGE);
 			return null;
 		}else { 
-			if(restrictionLetter(placa)) {
+			if(restrictionLetter(vehiculo.getPlaca())) {
 				if(validDate(day)) {
 					System.out.println(MESSAGE_NO_AUTHORIZATION);
 					return null;
 				}
 			}
-			if(findVehiculo(placa) == null) {
-			VehiculoModel newVehiculo =new  VehiculoModel(tipo,placa);
+			if(findVehiculo(vehiculo.getPlaca()) == null) {
+			VehiculoModel newVehiculo =new  VehiculoModel(vehiculo.getTipo(),vehiculo.getPlaca());
 			newVehiculo.setFechaIngreso(day);
 			VehiculoModel vehiculos = repositorio.save(newVehiculo);
-			reduceAvailability(tipo);
+			reduceAvailability(vehiculo.getTipo());
 			return vehiculos;	
 			}else System.out.println(REGISTERED_MESSAGE);
 			return null;
@@ -75,9 +75,10 @@ public class ParkingImp implements ParkingService {
 
 	@Override
 	public void checkOut(String placa) {
+		BillService bill = new Bill();
 		VehiculoModel vehiculoToLeave = findVehiculo(placa);
 		if(findVehiculo(placa) != null) {
-			BillService bill = new Bill();
+			bill.goOut(vehiculoToLeave);
 		}
 	
 	}

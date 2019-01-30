@@ -6,7 +6,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 
 public interface ParkingService {
 	
-	public VehiculoModel checkIn(String tipo, String placa);
+	public VehiculoModel checkIn(VehiculoModel vehiculo);
 	public void checkOut(String placa);
 	public Boolean restrictionLetter(String placa);
 	public Boolean fullParking(String tipo);

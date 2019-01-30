@@ -18,6 +18,7 @@ public class Bill implements BillService {
 	@Override
 	public VehiculoModel goOut(VehiculoModel vehiculoSalida) {
 		vehiculoSalida.setFechaSalida(LocalDateTime.now());
+		long Horas = calculateStay(vehiculoSalida.getFechaIngreso(), vehiculoSalida.getFechaSalida());
 		
 		return null;
 	}

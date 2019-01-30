@@ -1,7 +1,8 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.CeibaEstacionamiento.jenniffer.alvarez;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.*;
-import org.aspectj.lang.annotation.Before;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -18,20 +19,25 @@ public class ParkingTest {
 	private ParkingImp parking;
 	
 
-	@Before(value = "")
+	@Before
 	public void setup() {
 		repositorio = Mockito.mock(Repositorio.class);
 		parkingReposity = Mockito.mock(ParkingService.class);
-	
 		
-		vehiculo = new VehiculoModel("CARRO","XME11D");
+		vehiculo = new VehiculoModel("CARRO","RRO789");
+	
+		Mockito.when(parkingReposity.fullParking(vehiculo.getPlaca())).thenReturn(false);
+		Mockito.when(parkingReposity.restrictionLetter(vehiculo.getPlaca())).thenReturn(false);
+		Mockito.when(parkingReposity.validDate(vehiculo.getFechaIngreso())).thenReturn(false);
+		Mockito.when(parkingReposity.findVehiculo(vehiculo.getPlaca())).thenReturn(null);
+				
 		parking = new ParkingImp();
 	}
 	
 	@Test
-	public void checkInTest() {
-		parking.checkIn(vehiculo.getTipo(),vehiculo.getPlaca());
-		Mockito.verify(parkingReposity).checkIn(vehiculo.getTipo(),vehiculo.getPlaca());
-	}
-
+	public void checkInTestReady() {
+		parkingReposity.checkIn(vehiculo);
+		Mockito.verify(parkingReposity).checkIn(vehiculo);
+}
+	
 }
