@@ -15,7 +15,8 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 public class ParkingTest {
 	
 	private Repositorio repositorio;
-	private VehiculoModel vehiculo;
+	private VehiculoModel vehiculoCar;
+	private VehiculoModel vehiculoMoto;
 	private ParkingService parkingReposity;
 	private ParkingImp parking;
 	
@@ -25,7 +26,9 @@ public class ParkingTest {
 		repositorio = Mockito.mock(Repositorio.class);
 		parkingReposity = Mockito.mock(ParkingService.class);
 		
-		vehiculo = new VehiculoModel("CARRO","RRO789");
+		
+		vehiculoCar = new VehiculoModel("CARRO","RRO789");
+		vehiculoMoto = new VehiculoModel("MOTO", "xme11d");
 	
 	
 				
@@ -34,22 +37,35 @@ public class ParkingTest {
 	
 	@Test
 	public void checkInTestReady() {
-/*Mockito.when(parkingReposity.fullParking(vehiculo.getTipo())).thenReturn(false);
-		Mockito.when(parkingReposity.restrictionLetter(vehiculo.getPlaca())).thenReturn(false);
-		Mockito.when(parkingReposity.validDate(vehiculo.getFechaIngreso())).thenReturn(false);
-		Mockito.when(parkingReposity.findVehiculo(vehiculo.getPlaca())).thenReturn(null);
-		*/
-		parkingReposity.checkIn(vehiculo);
-		Mockito.verify(parkingReposity).checkIn(vehiculo);
+
+		parkingReposity.checkIn(vehiculoCar);
+		Mockito.verify(parkingReposity).checkIn(vehiculoCar);
 }
 	@Test
-	public void checkInTestFullParkink() {
+	public void checkInTestFullParkinkCar() {
 		
-		parking.setFullCarros(0);
-		Boolean isFullParking = parking.fullParking(vehiculo.getTipo());
+		Long lleno = (long) 20;
+		parking.setFullCarros(lleno);
+		Boolean isFullParking = parking.fullParking(vehiculoCar.getTipo());
 		assertTrue(isFullParking);
 		
 	}
 	
+	@Test
+	public void checkInTestFullParkinkMoto() {
+		
+		Long lleno = (long) 10;
+		parking.setFullMotos(lleno);
+		Boolean isFullParking = parking.fullParking(vehiculoMoto.getTipo());
+		assertTrue(isFullParking);	
+	}
+	
+	@Test
+	public void findVehicleOk() {
+		Mockito.when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
+		VehiculoModel vehiculo= repositorio.findByPlaca("RRO789");
+		assertEquals(vehiculoCar,vehiculo);
+		
+	}
 	
 }
