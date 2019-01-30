@@ -68,4 +68,14 @@ public class ParkingTest {
 		
 	}
 	
+	@Test
+	public void parkingFull() {
+		Long fullCarro = (long) 20;
+		Long fullMoto = (long) 10;
+		parking.setFullCarros(fullCarro);
+		parking.setFullMotos(fullMoto);
+		Boolean isFullParking = parking.fullParking(vehiculoMoto.getTipo());
+		assertTrue(isFullParking);
+	}
+	
 }
