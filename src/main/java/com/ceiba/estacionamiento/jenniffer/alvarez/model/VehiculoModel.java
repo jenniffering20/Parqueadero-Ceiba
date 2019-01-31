@@ -23,8 +23,13 @@ public class VehiculoModel {
 		this.cilindraje= cilindraje;
 	
 	}
-public VehiculoModel() {
+	public VehiculoModel() {
 		
+	}
+	
+	public void update(LocalDateTime fechaSalida, BigDecimal totalPago) {
+		this.fechaSalida= fechaSalida;
+		this.totalPago=totalPago;
 	}
 	
 	public LocalDateTime getFechaIngreso() {

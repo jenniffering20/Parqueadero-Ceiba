@@ -6,12 +6,20 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 
 @RestController
@@ -26,9 +34,8 @@ public class ParkingImp implements ParkingService {
 		this.repositorio = repositorio;
 	}
 
-	static String FULL_MESSAGE = "El estacionamiento no tiene espacio disponible";
-	static String REGISTERED_MESSAGE = "la Placa ya se encuentra registrada, verificar";
-	static String MESSAGE_NO_AUTHORIZATION = "No esta autorizado para ingresar";
+	
+	
 	static final String LETRA_RESTRICCION = "A";
 
 	int fullCarros;
@@ -55,30 +62,31 @@ public class ParkingImp implements ParkingService {
 	}
 
 	@Override
-	public VehiculoModel checkIn(VehiculoModel vehiculo) throws Exception {
+	public ResponseController<List<VehiculoModel>> checkIn(VehiculoModel vehiculo) throws GeneralException {
 		LocalDateTime day = LocalDateTime.now();
 
 		if (fullParking(vehiculo.getTipo())) {
-			System.out.println(FULL_MESSAGE);
-			throw new Exception(FULL_MESSAGE);
+			
+			throw new ParkingFullException();
 		}
 
 		if (restrictionLetter(vehiculo.getPlaca())) {
 
 			if (validDate(day)) {
-				throw new Exception(MESSAGE_NO_AUTHORIZATION);
+				
+				throw new DayNotValidException();
 			}
 		}
-
 		if (findVehiculo(vehiculo.getPlaca()) == null) {
-			VehiculoModel newVehiculo = new VehiculoModel(vehiculo.getTipo(), vehiculo.getPlaca(),
-					vehiculo.getCilindraje());
+			
+			VehiculoModel newVehiculo = new VehiculoModel(vehiculo.getTipo(), vehiculo.getPlaca(),vehiculo.getCilindraje());
 			newVehiculo.setFechaIngreso(day);
 			VehiculoModel vehiculos = repositorio.save(newVehiculo);
 			UpdateNumberOfVehicles();
-			return vehiculos;
+			return new ResponseController<List<VehiculoModel>>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL);
+			
 		} else {
-			throw new Exception(REGISTERED_MESSAGE);
+			throw new RegisteredVehicleException();
 		}
 
 	}
@@ -130,6 +138,7 @@ public class ParkingImp implements ParkingService {
 	@Override
 	public VehiculoModel findVehiculo(String placa) {
 		return repositorio.findByPlaca(placa);
+		
 	}
 
 	@Override
@@ -141,6 +150,17 @@ public class ParkingImp implements ParkingService {
 	@Override
 	public List<VehiculoModel> vehicles(String tipo) {
 		return repositorio.findByTipo(tipo);
+	}
+
+	@Override
+	public ResponseController<List<VehiculoModel>> findAll() {
+		List<VehiculoModel>vehicleList = repositorio.findAll();
+		if(vehicleList.isEmpty()) {
+			return new ResponseController<List<VehiculoModel>>(Constantes.NOT_VEHICLES);
+		}else {
+			return new ResponseController<List<VehiculoModel>>(vehicleList);
+		}
+		
 	}
 
 }

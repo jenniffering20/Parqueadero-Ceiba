@@ -96,15 +96,8 @@ public class ParkingTest {
 		assertTrue(restrictionLetter);
 	}
 
-	/*
-	@Test 
-	public void updateNumberOfVehiclesOk() {
-		when(repositorio.countByTipo("carro")).thenReturn((long)16);
-		long numberOfVehicles= parking.UpdateNumberOfVehicles();
-		
-		assertEquals((long)16,numberOfVehicles);
-	}
-	*/
+	
+	
 	
 	
 }

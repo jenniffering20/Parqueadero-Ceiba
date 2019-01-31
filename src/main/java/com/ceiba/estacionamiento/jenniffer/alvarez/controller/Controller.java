@@ -1,18 +1,29 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.controller;
 
 
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.ParkingImp;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.List;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
 
 
@@ -26,16 +37,10 @@ public class Controller {
 
 	//POST
 	@PostMapping("/Estacionamiento/Anadir")
-	public void postVehiculo(@RequestBody VehiculoModel vehiculo) {
-		VehiculoModel vehiculoInsert;
-		try {
-			vehiculoInsert = parkingService.checkIn(vehiculo);
+	public ResponseEntity<ResponseController<VehiculoModel>> postVehiculo(@RequestBody VehiculoModel vehiculo) throws GeneralException{
+		parkingService.checkIn(vehiculo);
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL,vehiculo));
 			
-		} catch (Exception e) {
-			
-			System.out.println(e.getMessage());
-		}
-		
 	}
 	
 	//GET
@@ -45,12 +50,12 @@ public class Controller {
 		return parkingService.findVehiculo(placa);
 		}
 	
-/* 
- * @RequestMapping(value = "/Estacionamiento/Vehiculos", method = RequestMethod.GET) 
-	public List<VehiculoModel> getAllVehiculos() { 
-		return repositorio.findAll();
-		} //COREGIR ERROR
-	
+ 
+	@RequestMapping(value = "/Estacionamiento/Vehiculos", method = RequestMethod.GET) 
+	public ResponseController<List<VehiculoModel>> getAllVehiculos() { 
+		return parkingService.findAll();
+		} 
+ /*
 	//PUT
 	@RequestMapping(value ="/Estacionamiento/EditVehiculos/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<VehiculoModel> upDateVehiculo(@PathVariable("id") String id, 
