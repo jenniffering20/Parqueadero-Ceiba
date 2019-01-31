@@ -6,7 +6,7 @@ public class DayNotValidException extends GeneralException{
 
 	public DayNotValidException() {
 		super(Constantes.MESSAGE_NO_AUTHORIZATION);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

@@ -1,11 +1,9 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.logic;
 
 import java.time.LocalDateTime;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
@@ -18,8 +16,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 
 
 @RestController
@@ -37,6 +34,8 @@ public class ParkingImp implements ParkingService {
 	
 	
 	static final String LETRA_RESTRICCION = "A";
+	static final String CARRO="CARRO";
+	static final String MOTO="MOTO";
 
 	int fullCarros;
 	int fullMotos;
@@ -81,7 +80,7 @@ public class ParkingImp implements ParkingService {
 			
 			VehiculoModel newVehiculo = new VehiculoModel(vehiculo.getTipo(), vehiculo.getPlaca(),vehiculo.getCilindraje());
 			newVehiculo.setFechaIngreso(day);
-			VehiculoModel vehiculos = repositorio.save(newVehiculo);
+			repositorio.save(newVehiculo);
 			UpdateNumberOfVehicles();
 			return new ResponseController<List<VehiculoModel>>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL);
 			
@@ -101,7 +100,7 @@ public class ParkingImp implements ParkingService {
 
 	public Boolean restrictionLetter(String placa) {
 		Boolean letter = placa.toUpperCase().startsWith(LETRA_RESTRICCION);
-		boolean restriction = (letter) ? true : false;
+		boolean restriction = (letter) ?true : false;
 		return restriction;
 	}
 
@@ -110,11 +109,11 @@ public class ParkingImp implements ParkingService {
 
 		full = (getFullCarros() == 20 && getFullMotos() == 10) ? true : false;
 
-		if (tipo.equalsIgnoreCase("CARRO") && getFullCarros() == 20) {
+		if (tipo.equalsIgnoreCase(CARRO) && getFullCarros() == 20) {
 			full = true;
 		}
 
-		if (tipo.equalsIgnoreCase("MOTO") && getFullMotos() == 10) {
+		if (tipo.equalsIgnoreCase(MOTO) && getFullMotos() == 10) {
 			full = true;
 		}
 
@@ -123,8 +122,7 @@ public class ParkingImp implements ParkingService {
 
 	private Boolean validDate(LocalDateTime dateCheckIn) {
 		Boolean validDate = (dateCheckIn.getDayOfWeek().getValue() == 1 || dateCheckIn.getDayOfWeek().getValue() == 0)
-				? false
-				: true;
+				? false: true;
 		return validDate;
 	}
 
@@ -143,8 +141,8 @@ public class ParkingImp implements ParkingService {
 
 	@Override
 	public List<VehiculoModel> registeredVehicle(String tipo, String id) {
-		List<VehiculoModel> vehiculos = vehicles(tipo);
-		return vehiculos;
+	
+		return vehicles(tipo);
 	}
 
 	@Override

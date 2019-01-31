@@ -5,17 +5,13 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
-import com.ceiba.estacionamiento.jenniffer.alvarez.logic.ParkingImp;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 import java.util.List;
-
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
+
 
 
 
@@ -41,6 +37,7 @@ public class Controller {
 		try {
 		parkingService.checkIn(vehiculo);
 		}catch(RegisteredVehicleException e) {
+	
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseController<VehiculoModel>(Constantes.REGISTERED_MESSAGE));
 		}catch(DayNotValidException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseController<VehiculoModel>(Constantes.MESSAGE_NO_AUTHORIZATION));
