@@ -95,6 +95,8 @@ public class ParkingTest {
 		Boolean restrictionLetter = parking.restrictionLetter("A");
 		assertTrue(restrictionLetter);
 	}
+	
+	
 
 	
 	

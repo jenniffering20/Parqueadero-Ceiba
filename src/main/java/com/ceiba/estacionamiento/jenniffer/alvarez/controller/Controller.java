@@ -38,8 +38,17 @@ public class Controller {
 	//POST
 	@PostMapping("/Estacionamiento/Anadir")
 	public ResponseEntity<ResponseController<VehiculoModel>> postVehiculo(@RequestBody VehiculoModel vehiculo) throws GeneralException{
+		try {
 		parkingService.checkIn(vehiculo);
-		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL,vehiculo));
+		}catch(RegisteredVehicleException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseController<VehiculoModel>(Constantes.REGISTERED_MESSAGE));
+		}catch(DayNotValidException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseController<VehiculoModel>(Constantes.MESSAGE_NO_AUTHORIZATION));
+		}catch(ParkingFullException e) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseController<VehiculoModel>(Constantes.FULL_MESSAGE));
+		}
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL,vehiculo));
 			
 	}
 	
