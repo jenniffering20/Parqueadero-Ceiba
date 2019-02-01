@@ -120,7 +120,7 @@ public class ParkingImp implements ParkingService {
 		return full;
 	}
 
-	private Boolean validDate(LocalDateTime dateCheckIn) {
+	public Boolean validDate(LocalDateTime dateCheckIn) {
 		Boolean validDate = (dateCheckIn.getDayOfWeek().getValue() == 1 || dateCheckIn.getDayOfWeek().getValue() == 0)
 				? false: true;
 		return validDate;

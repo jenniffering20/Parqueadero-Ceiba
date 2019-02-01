@@ -4,20 +4,27 @@ package com.ceiba.estacionamiento.jenniffer.alvarez.CeibaEstacionamiento.jenniff
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
+import java.time.DayOfWeek;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.ParkingImp;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 
 
-@SuppressWarnings("deprecation")
 public class ParkingTest {
 	
 	@Mock
@@ -40,7 +47,7 @@ public class ParkingTest {
 		parkingReposity = Mockito.mock(ParkingService.class);
 		
 		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
-		vehiculoMoto = new VehiculoModel("MOTO", "xme11d", 650);
+		vehiculoMoto = new VehiculoModel("MOTO", "XME11d", 650);
 
 		parking = new ParkingImp(repositorio);
 	}
@@ -94,6 +101,28 @@ public class ParkingTest {
 	public void restrictionLetterOk() {
 		Boolean restrictionLetter = parking.restrictionLetter("A");
 		assertTrue(restrictionLetter);
+	}
+	
+	@Test(expected = ParkingFullException.class)
+	public void checkInFullParkingException() throws GeneralException{
+		Long fullCarro = (long) 20;
+		parking.setFullCarros(fullCarro);
+		parking.checkIn(vehiculoCar);
+	}
+	
+	@Test(expected =DayNotValidException.class)
+	public void checkInDayNotValidExceptionForPlacaStarWithA() throws GeneralException{
+		VehiculoModel vehiculoCarplacaWithA = new VehiculoModel("CARRO","ARO789",0);
+		LocalDateTime dateTime = LocalDateTime.now();
+		LocalDateTime notValidDay = dateTime.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+		parking.validDate(notValidDay);
+		parking.checkIn(vehiculoCarplacaWithA);
+	}
+	@Test(expected =RegisteredVehicleException.class)
+	public void checkInVehicleRegistered()  throws GeneralException{
+		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
+		VehiculoModel vehiculoRegistered = new VehiculoModel("CARRO","RRO789",0);
+		parking.checkIn(vehiculoRegistered);
 	}
 	
 	
