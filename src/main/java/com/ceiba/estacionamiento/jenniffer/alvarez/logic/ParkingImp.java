@@ -158,7 +158,7 @@ public class ParkingImp implements ParkingService {
 		}else {
 			return new ResponseController<List<VehiculoModel>>(vehicleList);
 		}
-		
 	}
+	
 
 }

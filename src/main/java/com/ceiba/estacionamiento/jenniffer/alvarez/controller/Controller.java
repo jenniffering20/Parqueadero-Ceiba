@@ -45,7 +45,7 @@ public class Controller {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseController<VehiculoModel>(Constantes.FULL_MESSAGE));
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL,vehiculo));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL));
 			
 	}
 	
