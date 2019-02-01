@@ -61,6 +61,9 @@ public class Controller {
 	public ResponseController<List<VehiculoModel>> getAllVehiculos() { 
 		return parkingService.findAll();
 		} 
+	
+	
+	
  /*
 	//PUT
 	@RequestMapping(value ="/Estacionamiento/EditVehiculos/{id}", method = RequestMethod.PUT)
