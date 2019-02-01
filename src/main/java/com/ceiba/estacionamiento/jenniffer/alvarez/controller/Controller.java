@@ -32,7 +32,7 @@ public class Controller {
 	ParkingService parkingService;
 
 	//POST
-	@PostMapping("/Estacionamiento/Anadir")
+	@PostMapping("/estacionamientos")
 	public ResponseEntity<ResponseController<VehiculoModel>> postVehiculo(@RequestBody VehiculoModel vehiculo) throws GeneralException{
 		try {
 		parkingService.checkIn(vehiculo);
@@ -51,13 +51,13 @@ public class Controller {
 	
 	//GET
 	
-	@RequestMapping(value = "/Estacionamiento/Vehiculos/{placa}", method = RequestMethod.GET)
+	@RequestMapping(value = "/estacionamientos/vehiculos/{placa}", method = RequestMethod.GET)
 	public VehiculoModel  getByPlaca(@PathVariable("placa") String placa){
 		return parkingService.findVehiculo(placa);
 		}
 	
  
-	@RequestMapping(value = "/Estacionamiento/Vehiculos", method = RequestMethod.GET) 
+	@RequestMapping(value = "/estacionamientos/vehiculos", method = RequestMethod.GET) 
 	public ResponseController<List<VehiculoModel>> getAllVehiculos() { 
 		return parkingService.findAll();
 		} 

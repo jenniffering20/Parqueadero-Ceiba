@@ -14,6 +14,12 @@ public class Constantes {
 	public static String MESSAGE_NO_AUTHORIZATION = "No esta autorizado para ingresar";
 	public static String VEHICLE_REGISTERED_SUCCESSFUL="Registro Exitoso";
 	public static String NOT_VEHICLES="No hay vehiculos en el parqueadero";
+	public static final String LETRA_RESTRICCION = "A";
+	public static final String CARRO="CARRO";
+	public static final String MOTO="MOTO";
+	public static int DAY_FINISH_HOUR=9;
+	public static int DAY_HOUR=24;
+	
 
 
 	

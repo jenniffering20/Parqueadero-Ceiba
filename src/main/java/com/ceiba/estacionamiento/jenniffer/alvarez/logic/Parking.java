@@ -22,20 +22,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RestController
 @RequestMapping("/")
 @CrossOrigin("*")
-public class ParkingImp implements ParkingService {
+public class Parking implements ParkingService {
 
 	@Autowired
 	Repositorio repositorio;
 
-	public ParkingImp(Repositorio repositorio) {
+	public Parking(Repositorio repositorio) {
 		this.repositorio = repositorio;
 	}
 
 	
 	
-	static final String LETRA_RESTRICCION = "A";
-	static final String CARRO="CARRO";
-	static final String MOTO="MOTO";
+	
 
 	int fullCarros;
 	int fullMotos;
@@ -56,7 +54,7 @@ public class ParkingImp implements ParkingService {
 		fullMotos = NumeroVehiculos.intValue();
 	}
 
-	public ParkingImp() {
+	public Parking() {
 
 	}
 
@@ -99,7 +97,7 @@ public class ParkingImp implements ParkingService {
 	}
 
 	public Boolean restrictionLetter(String placa) {
-		Boolean letter = placa.toUpperCase().startsWith(LETRA_RESTRICCION);
+		Boolean letter = placa.toUpperCase().startsWith(Constantes.LETRA_RESTRICCION);
 		boolean restriction = (letter) ?true : false;
 		return restriction;
 	}
@@ -109,11 +107,11 @@ public class ParkingImp implements ParkingService {
 
 		full = (getFullCarros() == 20 && getFullMotos() == 10) ? true : false;
 
-		if (tipo.equalsIgnoreCase(CARRO) && getFullCarros() == 20) {
+		if (tipo.equalsIgnoreCase(Constantes.CARRO) && getFullCarros() == 20) {
 			full = true;
 		}
 
-		if (tipo.equalsIgnoreCase(MOTO) && getFullMotos() == 10) {
+		if (tipo.equalsIgnoreCase(Constantes.MOTO) && getFullMotos() == 10) {
 			full = true;
 		}
 

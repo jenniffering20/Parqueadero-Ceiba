@@ -4,10 +4,8 @@ package com.ceiba.estacionamiento.jenniffer.alvarez.CeibaEstacionamiento.jenniff
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.time.DayOfWeek;
 import org.junit.Before;
@@ -19,7 +17,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
-import com.ceiba.estacionamiento.jenniffer.alvarez.logic.ParkingImp;
+import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parking;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
@@ -37,7 +35,7 @@ public class ParkingTest {
 	
 	private VehiculoModel vehiculoCar;
 	private VehiculoModel vehiculoMoto;
-	private ParkingImp parking;
+	private Parking parking;
 	
 
 	@Before
@@ -51,7 +49,7 @@ public class ParkingTest {
 		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
 		vehiculoMoto = new VehiculoModel("MOTO", "XME11d", 650);
 
-		parking = new ParkingImp(repositorio);
+		parking = new Parking(repositorio);
 	}
 	
 	
