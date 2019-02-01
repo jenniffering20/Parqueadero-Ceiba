@@ -89,10 +89,12 @@ public class Parking implements ParkingService {
 	}
 
 	@Override
-	public void checkOut(String placa) {
+	public ResponseController<List<VehiculoModel>> checkOut(String placa) {
 		BillService bill = new Bill();
 		VehiculoModel vehiculoToLeave = findVehiculo(placa);
 		bill.goOut(vehiculoToLeave);
+		
+		return new ResponseController<List<VehiculoModel>>(Constantes.CHECKED_VEHICLE);
 
 	}
 

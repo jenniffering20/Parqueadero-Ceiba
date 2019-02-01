@@ -62,7 +62,11 @@ public class Controller {
 		return parkingService.findAll();
 		} 
 	
-	
+	@RequestMapping(value = "/estacionamientos/salida/{placa}", method = RequestMethod.GET) 
+	public ResponseEntity<ResponseController<VehiculoModel>> checkOutVehiculo(@RequestBody VehiculoModel vehiculo){
+		return null;
+		
+	}
 	
  /*
 	//PUT

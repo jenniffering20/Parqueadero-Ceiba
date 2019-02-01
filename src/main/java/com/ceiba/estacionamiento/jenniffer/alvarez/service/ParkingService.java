@@ -9,7 +9,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 public interface ParkingService {
 	
 	public ResponseController<List<VehiculoModel>> checkIn(VehiculoModel vehiculo) throws GeneralException;
-	public void checkOut(String placa);
+	public ResponseController<List<VehiculoModel>> checkOut(String placa);
 	public VehiculoModel findVehiculo(String id);
 	public List<VehiculoModel> registeredVehicle(String tipo,String id);
 	public List<VehiculoModel> vehicles(String tipo);
