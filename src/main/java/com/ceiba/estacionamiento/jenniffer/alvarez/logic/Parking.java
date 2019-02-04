@@ -50,16 +50,16 @@ public class Parking implements ParkingService {
 		return fullCarros;
 	}
 
-	public void setFullCarros(Long NumeroVehiculos) {
-		fullCarros = NumeroVehiculos.intValue();
+	public void setFullCarros(Long numeroVehiculos) {
+		fullCarros = numeroVehiculos.intValue();
 	}
 
 	public int getFullMotos() {
 		return fullMotos;
 	}
 
-	public void setFullMotos(Long NumeroVehiculos) {
-		fullMotos = NumeroVehiculos.intValue();
+	public void setFullMotos(Long numeroVehiculos) {
+		fullMotos = numeroVehiculos.intValue();
 	}
 	
 

@@ -67,9 +67,9 @@ public class Controller {
 	@RequestMapping(value = "/estacionamientos/salida/{placa}", method = RequestMethod.GET) 
 	public ResponseEntity<ResponseController<VehiculoModel>> checkOutVehiculo(@PathVariable("placa") String placa){
 		parkingService.checkOut(placa);
-		 VehiculoModel VehicleCheckOut= parkingService.findVehiculo(placa);
+		 VehiculoModel vehicleCheckOut= parkingService.findVehiculo(placa);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(Constantes.CHECKED_VEHICLE,VehicleCheckOut));
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(Constantes.CHECKED_VEHICLE,vehicleCheckOut));
 
 	}
 	

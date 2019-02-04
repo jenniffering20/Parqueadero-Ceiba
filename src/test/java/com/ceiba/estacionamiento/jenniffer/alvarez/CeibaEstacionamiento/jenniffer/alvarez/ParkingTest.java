@@ -52,6 +52,7 @@ public class ParkingTest {
 
 		parking = new Parking(repositorio);
 	}
+
 	
 	
 	@Test
@@ -59,6 +60,12 @@ public class ParkingTest {
 
 		parkingReposity.checkIn(vehiculoCar);
 		Mockito.verify(parkingReposity).checkIn(vehiculoCar);
+	}
+	@Test
+	public void checkOutTestReady() throws Exception {
+
+		parkingReposity.checkOut(vehiculoCar.getPlaca());
+		Mockito.verify(parkingReposity).checkOut(vehiculoCar.getPlaca());
 	}
 	
 	@Test

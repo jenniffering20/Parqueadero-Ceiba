@@ -23,17 +23,17 @@ public class Bill implements BillService {
 		
 		PaymentCalculation payment=new PaymentCalculation();
 		
-		BigDecimal PaymentCalculation;
+		BigDecimal paymentCalculation;
 		long horas = calculateStay(vehiculoSalida.getFechaIngreso(), vehiculoSalida.getFechaSalida());
 		
 		if(vehiculoSalida.getTipo().equalsIgnoreCase(Constantes.CARRO)) {
 			
-			PaymentCalculation = payment.PaymentCalculationCar(horas);
+			paymentCalculation = payment.PaymentCalculationCar(horas);
 		}else {
-			PaymentCalculation = payment.PaymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
+			paymentCalculation = payment.PaymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
 		}
 		
-		vehiculoSalida.setTotalPago(PaymentCalculation);
+		vehiculoSalida.setTotalPago(paymentCalculation);
 		
 		return vehiculoSalida;
 	}

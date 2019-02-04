@@ -70,7 +70,7 @@ public class PaymentCalculation implements PaymentCalculationService{
 		}
 		
 		if(cilindraje > 500) {
-			pay=pay.add(Constantes.PRECIO_ADICION_CILINDRAJE);
+			pay= pay.add(Constantes.PRECIO_ADICION_CILINDRAJE);
 		}
 		
 		return pay;
