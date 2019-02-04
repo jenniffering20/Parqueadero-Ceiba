@@ -20,10 +20,4 @@ public class Constantes {
 	public static final String MOTO="MOTO";
 	public static int DAY_FINISH_HOUR=9;
 	public static int DAY_HOUR=24;
-	
-
-
-	
-	
-
 }

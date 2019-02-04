@@ -34,6 +34,7 @@ public class Controller {
 	//POST
 	@PostMapping("/estacionamientos")
 	public ResponseEntity<ResponseController<VehiculoModel>> postVehiculo(@RequestBody VehiculoModel vehiculo) throws GeneralException{
+
 		try {
 		parkingService.checkIn(vehiculo);
 		}catch(RegisteredVehicleException e) {
@@ -62,11 +63,16 @@ public class Controller {
 		return parkingService.findAll();
 		} 
 	
+	
 	@RequestMapping(value = "/estacionamientos/salida/{placa}", method = RequestMethod.GET) 
-	public ResponseEntity<ResponseController<VehiculoModel>> checkOutVehiculo(@RequestBody VehiculoModel vehiculo){
-		return null;
+	public ResponseEntity<ResponseController<VehiculoModel>> checkOutVehiculo(@PathVariable("placa") String placa){
+		parkingService.checkOut(placa);
+		 VehiculoModel VehicleCheckOut= parkingService.findVehiculo(placa);
 		
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(Constantes.CHECKED_VEHICLE,VehicleCheckOut));
+
 	}
+	
 	
  /*
 	//PUT

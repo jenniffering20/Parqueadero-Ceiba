@@ -36,7 +36,7 @@ public class ParkingTest {
 	private VehiculoModel vehiculoCar;
 	private VehiculoModel vehiculoMoto;
 	private Parking parking;
-	
+
 
 	@Before
 	public void setup() {
@@ -45,6 +45,7 @@ public class ParkingTest {
 		
 		repositorio = Mockito.mock(Repositorio.class);
 		parkingReposity = Mockito.mock(ParkingService.class);
+		
 		
 		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
 		vehiculoMoto = new VehiculoModel("MOTO", "XME11d", 650);
@@ -143,12 +144,14 @@ public class ParkingTest {
 	@Test(expected =DayNotValidException.class)
 	public void checkInDayNotValidExceptionForPlacaStarWithA() throws GeneralException{
 		
+		LocalDateTime day= LocalDateTime.now();
+		LocalDateTime notValidDay = day.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
 		VehiculoModel vehiculoCarplacaWithA = new VehiculoModel("CARRO","ARO789",0);
-		LocalDateTime dateTime = LocalDateTime.now();
-		LocalDateTime notValidDay = dateTime.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
-		
+
 		parking.validDate(notValidDay);
+		parking.setDay(notValidDay);
 		parking.checkIn(vehiculoCarplacaWithA);
+		
 	}
 	
 	@Test(expected =RegisteredVehicleException.class)
@@ -188,6 +191,15 @@ public class ParkingTest {
 		
 		assertEquals(responseController.getMensage(),Constantes.VEHICLE_REGISTERED_SUCCESSFUL);
 	}
+	
+	@Test 
+	public void testDayOk() {
+		LocalDateTime day=LocalDateTime.now();
+		
+		assertEquals(day, parking.date(day));
+	}
+	
+	
 
 
 	

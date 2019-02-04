@@ -11,8 +11,6 @@ public interface ParkingService {
 	public ResponseController<List<VehiculoModel>> checkIn(VehiculoModel vehiculo) throws GeneralException;
 	public ResponseController<List<VehiculoModel>> checkOut(String placa);
 	public VehiculoModel findVehiculo(String id);
-	public List<VehiculoModel> registeredVehicle(String tipo,String id);
-	public List<VehiculoModel> vehicles(String tipo);
 	public ResponseController<List<VehiculoModel>> findAll();
 	
 

@@ -13,18 +13,24 @@ public class PaymentCalculation implements PaymentCalculationService{
 		super();
 	}
 
-	public BigDecimal PaymentCalculationCar (long horas) {
+	public BigDecimal PaymentCalculationCar (long hora) {
 		BigDecimal pay;
-		if(horas>Constantes.DAY_FINISH_HOUR && horas <=Constantes.DAY_HOUR) {
-			
+		
+		long horas= hora / 60L;
+		long minutos= hora % 60L;
+		if(minutos > 0L) {
+			horas=horas+1L;
+		}
+		
+		if(horas < Constantes.DAY_FINISH_HOUR && horas <= Constantes.DAY_HOUR) {
 			
 			BigDecimal horasParking = BigDecimal.valueOf(horas);
 			 pay= horasParking.multiply(Constantes.PRECIO_HORA_CARRO);
 			 
-		}else {
+		}else{
 
-			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);
-			BigDecimal horasParking = BigDecimal.valueOf(horas % Constantes.DAY_HOUR);
+			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);	
+			BigDecimal horasParking = BigDecimal.valueOf(horas % Constantes.DAY_HOUR);		
 			BigDecimal diasPayment= diasParking.multiply(Constantes.PRECIO_DIA_CARRO);
 			BigDecimal horasPayment= horasParking.multiply(Constantes.PRECIO_HORA_CARRO);
 			
@@ -34,14 +40,24 @@ public class PaymentCalculation implements PaymentCalculationService{
 		return pay;
 	}
 	
-	public BigDecimal PaymentCalculationMoto (long horas,int cilindraje) {
+	
+	
+	public BigDecimal PaymentCalculationMoto (long hora,int cilindraje) {
 		BigDecimal pay;
 		
-		if(horas>Constantes.DAY_FINISH_HOUR && horas <=Constantes.DAY_HOUR) {
+		long horas= hora / 60L;
+		long minutos= hora % 60L;
+		
+		if(minutos > 0L) {
+			horas=horas+1L;
+		}
+
+		
+		if(horas < Constantes.DAY_FINISH_HOUR && horas <=Constantes.DAY_HOUR) {
 			
 			
 			BigDecimal horasParking = BigDecimal.valueOf(horas);
-			 pay= horasParking.multiply(Constantes.PRECIO_DIA_MOTO);
+			 pay= horasParking.multiply(Constantes.PRECIO_HORA_MOTO);
 			 
 		}else {
 
@@ -53,7 +69,7 @@ public class PaymentCalculation implements PaymentCalculationService{
 			pay= diasPayment.add(horasPayment);	
 		}
 		
-		if(cilindraje>500) {
+		if(cilindraje > 500) {
 			pay=pay.add(Constantes.PRECIO_ADICION_CILINDRAJE);
 		}
 		

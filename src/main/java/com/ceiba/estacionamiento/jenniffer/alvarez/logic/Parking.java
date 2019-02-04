@@ -32,11 +32,19 @@ public class Parking implements ParkingService {
 	}
 
 	
-	
-	
+
 
 	int fullCarros;
 	int fullMotos;
+	public LocalDateTime day = LocalDateTime.now();
+
+	public LocalDateTime getDay() {
+		return day;
+	}
+
+	public void setDay(LocalDateTime day) {
+		this.day = day;
+	}
 
 	public int getFullCarros() {
 		return fullCarros;
@@ -53,14 +61,14 @@ public class Parking implements ParkingService {
 	public void setFullMotos(Long NumeroVehiculos) {
 		fullMotos = NumeroVehiculos.intValue();
 	}
+	
 
-	public Parking() {
 
-	}
 
 	@Override
 	public ResponseController<List<VehiculoModel>> checkIn(VehiculoModel vehiculo) throws GeneralException {
-		LocalDateTime day = LocalDateTime.now();
+		
+		
 
 		if (fullParking(vehiculo.getTipo())) {
 			
@@ -69,7 +77,7 @@ public class Parking implements ParkingService {
 
 		if (restrictionLetter(vehiculo.getPlaca())) {
 
-			if (validDate(day)) {
+			if (validDate(getDay())) {
 				
 				throw new DayNotValidException();
 			}
@@ -77,7 +85,7 @@ public class Parking implements ParkingService {
 		if (findVehiculo(vehiculo.getPlaca()) == null) {
 			
 			VehiculoModel newVehiculo = new VehiculoModel(vehiculo.getTipo(), vehiculo.getPlaca(),vehiculo.getCilindraje());
-			newVehiculo.setFechaIngreso(day);
+			newVehiculo.setFechaIngreso(getDay());
 			repositorio.save(newVehiculo);
 			UpdateNumberOfVehicles();
 			return new ResponseController<List<VehiculoModel>>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL);
@@ -88,12 +96,18 @@ public class Parking implements ParkingService {
 
 	}
 
+	public LocalDateTime date(LocalDateTime day) {
+		setDay(day);
+		return getDay();
+	}
+	
 	@Override
 	public ResponseController<List<VehiculoModel>> checkOut(String placa) {
 		BillService bill = new Bill();
 		VehiculoModel vehiculoToLeave = findVehiculo(placa);
-		bill.goOut(vehiculoToLeave);
-		
+		VehiculoModel vehiculoToUpdate= bill.goOut(vehiculoToLeave);
+		 repositorio.save(vehiculoToUpdate);
+	
 		return new ResponseController<List<VehiculoModel>>(Constantes.CHECKED_VEHICLE);
 
 	}
@@ -125,6 +139,7 @@ public class Parking implements ParkingService {
 				? false: true;
 		return validDate;
 	}
+	
 
 	public void UpdateNumberOfVehicles() {
 		Long cantidadVehiculosCarros = repositorio.countByTipo("carro");
@@ -139,16 +154,11 @@ public class Parking implements ParkingService {
 		
 	}
 
-	@Override
-	public List<VehiculoModel> registeredVehicle(String tipo, String id) {
-	
-		return vehicles(tipo);
-	}
-
+/*
 	@Override
 	public List<VehiculoModel> vehicles(String tipo) {
 		return repositorio.findByTipo(tipo);
-	}
+	}*/
 
 	@Override
 	public ResponseController<List<VehiculoModel>> findAll() {

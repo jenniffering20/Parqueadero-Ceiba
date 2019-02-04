@@ -22,6 +22,7 @@ public class Bill implements BillService {
 		vehiculoSalida.setFechaSalida(LocalDateTime.now());
 		
 		PaymentCalculation payment=new PaymentCalculation();
+		
 		BigDecimal PaymentCalculation;
 		long horas = calculateStay(vehiculoSalida.getFechaIngreso(), vehiculoSalida.getFechaSalida());
 		
@@ -29,7 +30,7 @@ public class Bill implements BillService {
 			
 			PaymentCalculation = payment.PaymentCalculationCar(horas);
 		}else {
-			PaymentCalculation =payment.PaymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
+			PaymentCalculation = payment.PaymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
 		}
 		
 		vehiculoSalida.setTotalPago(PaymentCalculation);
@@ -40,7 +41,7 @@ public class Bill implements BillService {
 
 	public long calculateStay(LocalDateTime fechaEntrada, LocalDateTime fechaSalida) {
 		
-		long diffHoras=Duration.between(fechaEntrada,fechaSalida).toHours();
+		long diffHoras=Duration.between(fechaEntrada,fechaSalida).toMinutes();
 		return diffHoras;
 	}
 	
