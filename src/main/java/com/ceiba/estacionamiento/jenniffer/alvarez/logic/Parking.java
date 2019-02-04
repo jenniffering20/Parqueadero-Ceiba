@@ -135,8 +135,7 @@ public class Parking implements ParkingService {
 	}
 
 	public Boolean validDate(LocalDateTime dateCheckIn) {
-		Boolean validDate = (dateCheckIn.getDayOfWeek().getValue() == 1 || dateCheckIn.getDayOfWeek().getValue() == 0)
-				? false: true;
+		Boolean validDate = (dateCheckIn.getDayOfWeek().getValue() == 1 || dateCheckIn.getDayOfWeek().getValue() == 0)? false: true;
 		return validDate;
 	}
 	
@@ -153,12 +152,6 @@ public class Parking implements ParkingService {
 		return repositorio.findByPlaca(placa);
 		
 	}
-
-/*
-	@Override
-	public List<VehiculoModel> vehicles(String tipo) {
-		return repositorio.findByTipo(tipo);
-	}*/
 
 	@Override
 	public ResponseController<List<VehiculoModel>> findAll() {

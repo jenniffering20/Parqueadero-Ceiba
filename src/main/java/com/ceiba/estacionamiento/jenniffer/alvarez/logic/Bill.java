@@ -41,8 +41,7 @@ public class Bill implements BillService {
 
 	public long calculateStay(LocalDateTime fechaEntrada, LocalDateTime fechaSalida) {
 		
-		long diffHoras=Duration.between(fechaEntrada,fechaSalida).toMinutes();
-		return diffHoras;
+		return Duration.between(fechaEntrada,fechaSalida).toMinutes();
 	}
 	
 	

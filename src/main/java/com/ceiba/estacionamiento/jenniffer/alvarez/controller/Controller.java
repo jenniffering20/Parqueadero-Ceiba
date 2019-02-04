@@ -74,37 +74,5 @@ public class Controller {
 	}
 	
 	
- /*
-	//PUT
-	@RequestMapping(value ="/Estacionamiento/EditVehiculos/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<VehiculoModel> upDateVehiculo(@PathVariable("id") String id, 
-			@Valid @RequestBody VehiculoModel vehiculoModel){
-		
-		return repositorio.findById(id).map(vehiculos -> {
-					vehiculos.setPlaca(vehiculoModel.getPlaca());
-					VehiculoModel upDateVehiculo = repositorio.save(vehiculos);
-					return ResponseEntity.ok().body(upDateVehiculo);
-				}).orElse(ResponseEntity.notFound().build());
-		
-	}
-
-	//DELETE 
-	@RequestMapping(value ="/Estacionamiento/salidaVehiculo/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> salidaVehiculo(@PathVariable("id") String id){
-		return repositorio.findById(id)
-				.map(vehiculo -> {
-					repositorio.deleteById(id);
-					return ResponseEntity.ok().build();
-				}).orElse(ResponseEntity.notFound().build());
-	}
-	
-	*/
-	
-
-	
-	
-	
-	
-	
 }
 
