@@ -8,6 +8,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
@@ -67,6 +68,9 @@ public class Parking implements ParkingService {
 
 	@Override
 	public ResponseController<List<VehiculoModel>> checkIn(VehiculoModel vehiculo) throws GeneralException {
+		if(vehiculo.getTipo() == "") {
+			throw new TypeInvalidException();
+		}
 		
 		if (fullParking(vehiculo.getTipo())) {
 			

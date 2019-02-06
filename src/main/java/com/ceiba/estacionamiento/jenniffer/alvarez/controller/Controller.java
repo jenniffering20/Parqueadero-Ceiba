@@ -5,6 +5,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
@@ -38,8 +39,9 @@ public class Controller {
 		try {
 		parkingService.checkIn(vehiculo);
 		}catch(RegisteredVehicleException e) {
-	
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseController<VehiculoModel>(Constantes.REGISTERED_MESSAGE));
+		}catch(TypeInvalidException e){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseController<VehiculoModel>(Constantes.NOT_VALID_TYPE));
 		}catch(DayNotValidException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseController<VehiculoModel>(Constantes.MESSAGE_NO_AUTHORIZATION));
 		}catch(ParkingFullException e) {

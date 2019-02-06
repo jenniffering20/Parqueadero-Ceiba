@@ -9,3 +9,4 @@ public class RegisteredVehicleException extends GeneralException{
 	}
 
 }
+

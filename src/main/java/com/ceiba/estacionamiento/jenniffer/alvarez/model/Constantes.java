@@ -10,6 +10,7 @@ public class Constantes {
 	public static final BigDecimal PRECIO_DIA_MOTO=new BigDecimal("4000");
 	public static final BigDecimal PRECIO_ADICION_CILINDRAJE=new BigDecimal("2000");
 	public static final String FULL_MESSAGE = "El estacionamiento no tiene espacio disponible";
+	public static final String NOT_VALID_TYPE ="Seleccionar un tipo de vehiculo";
 	public static final String REGISTERED_MESSAGE = "la Placa ya se encuentra registrada, verificar";
 	public static final String MESSAGE_NO_AUTHORIZATION = "No esta autorizado para ingresar";
 	public static final String VEHICLE_REGISTERED_SUCCESSFUL="Registro Exitoso";
