@@ -22,14 +22,19 @@ public class PaymentCalculation implements PaymentCalculationService{
 			horas=horas+1L;
 		}
 		
-		if(horas < Constantes.DAY_FINISH_HOUR && horas <= Constantes.DAY_HOUR) {
+		if(horas <= Constantes.DAY_HOUR) {
+			
+		if(horas < Constantes.DAY_FINISH_HOUR ) {
 			
 			BigDecimal horasParking = BigDecimal.valueOf(horas);
 			 pay= horasParking.multiply(Constantes.PRECIO_HORA_CARRO);
-			 
+		}else{
+			BigDecimal horasParking = BigDecimal.valueOf(1L);
+			 pay= horasParking.multiply(Constantes.PRECIO_DIA_CARRO);
+		} 
 		}else{
 
-			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);	
+			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);
 			BigDecimal horasParking = BigDecimal.valueOf(horas % Constantes.DAY_HOUR);		
 			BigDecimal diasPayment= diasParking.multiply(Constantes.PRECIO_DIA_CARRO);
 			BigDecimal horasPayment= horasParking.multiply(Constantes.PRECIO_HORA_CARRO);
@@ -52,13 +57,16 @@ public class PaymentCalculation implements PaymentCalculationService{
 			horas=horas+1L;
 		}
 
-		
+		if(horas <= Constantes.DAY_HOUR) {
 		if(horas < Constantes.DAY_FINISH_HOUR && horas <=Constantes.DAY_HOUR) {
 			
 			
 			BigDecimal horasParking = BigDecimal.valueOf(horas);
 			 pay= horasParking.multiply(Constantes.PRECIO_HORA_MOTO);
-			 
+		}else {
+			BigDecimal horasParking = BigDecimal.valueOf(1L);
+			 pay= horasParking.multiply(Constantes.PRECIO_DIA_MOTO);
+		} 
 		}else {
 
 			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);

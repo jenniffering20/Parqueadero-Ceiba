@@ -36,7 +36,7 @@ public class Parking implements ParkingService {
 
 	int fullCarros;
 	int fullMotos;
-	public LocalDateTime day = LocalDateTime.now();
+	private LocalDateTime day;
 
 	public LocalDateTime getDay() {
 		return day;
@@ -68,8 +68,6 @@ public class Parking implements ParkingService {
 	@Override
 	public ResponseController<List<VehiculoModel>> checkIn(VehiculoModel vehiculo) throws GeneralException {
 		
-		
-
 		if (fullParking(vehiculo.getTipo())) {
 			
 			throw new ParkingFullException();
@@ -85,6 +83,7 @@ public class Parking implements ParkingService {
 		if (findVehiculo(vehiculo.getPlaca()) == null) {
 			
 			VehiculoModel newVehiculo = new VehiculoModel(vehiculo.getTipo(), vehiculo.getPlaca(),vehiculo.getCilindraje());
+			setDay(LocalDateTime.now());
 			newVehiculo.setFechaIngreso(getDay());
 			repositorio.save(newVehiculo);
 			UpdateNumberOfVehicles();
@@ -120,7 +119,7 @@ public class Parking implements ParkingService {
 
 	public Boolean fullParking(String tipo) {
 		Boolean full = false;
-
+		UpdateNumberOfVehicles();
 		full = (getFullCarros() == 20 && getFullMotos() == 10) ? true : false;
 
 		if (tipo.equalsIgnoreCase(Constantes.CARRO) && getFullCarros() == 20) {

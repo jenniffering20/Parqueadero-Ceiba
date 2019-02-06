@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 public class Controller {
 
 	@Autowired
@@ -73,6 +73,6 @@ public class Controller {
 
 	}
 	
-	
+
 }
 
