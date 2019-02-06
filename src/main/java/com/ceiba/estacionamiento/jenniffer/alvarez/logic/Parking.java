@@ -119,7 +119,7 @@ public class Parking implements ParkingService {
 
 	public Boolean fullParking(String tipo) {
 		Boolean full = false;
-		UpdateNumberOfVehicles();
+		
 		full = (getFullCarros() == 20 && getFullMotos() == 10) ? true : false;
 
 		if (tipo.equalsIgnoreCase(Constantes.CARRO) && getFullCarros() == 20) {
