@@ -17,6 +17,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 
 
@@ -114,6 +115,7 @@ public class Parking implements ParkingService {
 		return new ResponseController<List<VehiculoModel>>(Constantes.CHECKED_VEHICLE);
 
 	}
+	
 
 	public Boolean restrictionLetter(String placa) {
 		Boolean letter = placa.toUpperCase().startsWith(Constantes.LETRA_RESTRICCION);
@@ -165,6 +167,7 @@ public class Parking implements ParkingService {
 			return new ResponseController<List<VehiculoModel>>(vehicleList);
 		}
 	}
+
 	
 
 }

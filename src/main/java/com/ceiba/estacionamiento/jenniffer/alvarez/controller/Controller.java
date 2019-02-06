@@ -55,8 +55,13 @@ public class Controller {
 	//GET
 	
 	@RequestMapping(value = "/estacionamientos/vehiculos/{placa}", method = RequestMethod.GET)
-	public VehiculoModel  getByPlaca(@PathVariable("placa") String placa){
-		return parkingService.findVehiculo(placa);
+	public ResponseEntity<ResponseController<VehiculoModel>>  getByPlaca(@PathVariable("placa") String placa){
+		VehiculoModel vehiculo = parkingService.findVehiculo(placa);
+
+		if(vehiculo==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseController<VehiculoModel>(Constantes.NOT_VEHICLE_ISPARKING));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(vehiculo));
 		}
 	
  
