@@ -17,6 +17,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parking;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
@@ -146,6 +147,11 @@ public class ParkingTest {
 		
 		parking.setFullCarros(fullCarro);
 		parking.checkIn(vehiculoCar);
+	}
+	@Test(expected = TypeInvalidException.class)
+	public void checkInInvalidTypeException() throws GeneralException{
+		VehiculoModel vehiculoSinTipo = new VehiculoModel("","RRO789",0);	
+		parking.checkIn(vehiculoSinTipo);
 	}
 	
 	@Test(expected =DayNotValidException.class)
