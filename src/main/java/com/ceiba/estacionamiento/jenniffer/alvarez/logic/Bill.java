@@ -16,22 +16,12 @@ public class Bill implements BillService {
 		super();
 	}
 	
-	private LocalDateTime day;
-
-	public LocalDateTime getDay() {
-		return day;
-	}
-
-	public void setDay(LocalDateTime day) {
-		this.day = day;
-	}
 	
 
 	@Override
 	public VehiculoModel goOut(VehiculoModel vehiculoSalida) {
-		setDay(LocalDateTime.now());
-		vehiculoSalida.setFechaSalida(getDay());
 		
+		vehiculoSalida.setFechaSalida(LocalDateTime.now());
 		PaymentCalculation payment=new PaymentCalculation();
 		
 		BigDecimal paymentCalculation;

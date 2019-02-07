@@ -27,7 +27,7 @@ public class BillTest {
 		bill= new Bill();
 		repositorio = Mockito.mock(Repositorio.class);
 		
-		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
+		
 		vehiculoMoto = new VehiculoModel("MOTO", "XME11d", 650);
 	}
 
@@ -51,25 +51,25 @@ public class BillTest {
 		
 		assertNotEquals(horasEsperadas, horasReales);
 	}
+	
 	/*
 	@Test 
 	public void gotOutOk() {
+		
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
-		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
-		BigDecimal totalPago=new BigDecimal("25000");
-		
-		vehiculoCar.setFechaIngreso(fechaEntrada);
+		vehiculoCar = new VehiculoModel("CARRO","RRO789",0,fechaEntrada);
+		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 10, 00);
 		vehiculoCar.setFechaSalida(fechaSalida);
-		bill.setDay(fechaSalida);
+		BigDecimal totalPago=new BigDecimal("2000");
+		
 	
-		 VehiculoModel vehiculoReal= bill.goOut(vehiculoCar);
+		bill.goOut(vehiculoCar);
 		 
-		
-		assertEquals(vehiculoCar.getPlaca(),vehiculoReal.getPlaca());
-		assertEquals(vehiculoCar.getFechaSalida(),vehiculoReal.getFechaSalida());
-		assertEquals(totalPago,vehiculoReal.getTotalPago());
+
+		assertEquals(totalPago,vehiculoCar.getTotalPago());
 		
 		
-	}*/
+	}
+	*/
 
 }

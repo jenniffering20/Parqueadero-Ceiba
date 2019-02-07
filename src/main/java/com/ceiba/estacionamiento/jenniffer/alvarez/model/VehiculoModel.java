@@ -24,6 +24,16 @@ public class VehiculoModel {
 
 	
 	}
+	
+	public VehiculoModel(String tipo,String placa,int cilindraje,LocalDateTime fechaIngreso) {
+		this.tipo=tipo;
+		this.placa=placa;	
+		this.cilindraje= cilindraje;
+		this.fechaIngreso= fechaIngreso;
+
+	
+	}
+	
 	public VehiculoModel() {
 		
 	}
@@ -72,6 +82,7 @@ public class VehiculoModel {
 	public LocalDateTime getFechaSalida() {
 		return fechaSalida;
 	}
+	
 	public void setFechaSalida(LocalDateTime fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}

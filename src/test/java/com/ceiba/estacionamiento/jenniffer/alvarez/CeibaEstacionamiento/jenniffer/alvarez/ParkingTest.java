@@ -62,6 +62,7 @@ public class ParkingTest {
 		parkingReposity.checkIn(vehiculoCar);
 		Mockito.verify(parkingReposity).checkIn(vehiculoCar);
 	}
+	
 	@Test
 	public void checkOutTestReady() throws Exception {
 
@@ -123,6 +124,15 @@ public class ParkingTest {
 	}
 	
 	@Test
+	public void findVehicleNotOk() {
+		
+		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
+		VehiculoModel vehiculo= parking.findVehiculo("ERR781");
+		
+		assertNotEquals(vehiculoCar,vehiculo);	
+	}
+	
+	@Test
 	public void parkingFull() {
 		Long fullCarro = (long) 20;
 		Long fullMoto = (long) 10;
@@ -135,10 +145,29 @@ public class ParkingTest {
 	}
 	
 	@Test
+	public void NotParkingFull() {
+		Long fullCarro = (long) 10;
+		Long fullMoto = (long) 8;
+		
+		parking.setFullCarros(fullCarro);
+		parking.setFullMotos(fullMoto);
+		Boolean isFullParking = parking.fullParking(vehiculoMoto.getTipo());
+		
+		assertFalse(isFullParking);
+	}
+	
+	@Test
 	public void restrictionLetterOk() {
 		
 		Boolean restrictionLetter = parking.restrictionLetter("A");
 		assertTrue(restrictionLetter);
+	}
+	
+	@Test
+	public void restrictionLetterNotOk() {
+		
+		Boolean restrictionLetter = parking.restrictionLetter("B");
+		assertFalse(restrictionLetter);
 	}
 	
 	@Test(expected = ParkingFullException.class)
@@ -148,6 +177,7 @@ public class ParkingTest {
 		parking.setFullCarros(fullCarro);
 		parking.checkIn(vehiculoCar);
 	}
+	
 	@Test(expected = TypeInvalidException.class)
 	public void checkInInvalidTypeException() throws GeneralException{
 		VehiculoModel vehiculoSinTipo = new VehiculoModel("","RRO789",0);	
@@ -186,6 +216,7 @@ public class ParkingTest {
 		
 		assertFalse(responseController.getDato().isEmpty());
 	}
+	
 	@Test
 	public void testAllVehiclesNotVehicles(){
 		List<VehiculoModel>vehiculos = new ArrayList<VehiculoModel>();
