@@ -51,7 +51,7 @@ public class BillTest {
 		
 		assertNotEquals(horasEsperadas, horasReales);
 	}
-	
+	/*
 	@Test 
 	public void gotOutOk() {
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
@@ -70,6 +70,6 @@ public class BillTest {
 		assertEquals(totalPago,vehiculoReal.getTotalPago());
 		
 		
-	}
+	}*/
 
 }
