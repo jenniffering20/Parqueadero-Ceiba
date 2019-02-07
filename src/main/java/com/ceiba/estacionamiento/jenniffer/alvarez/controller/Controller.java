@@ -46,7 +46,7 @@ public class Controller {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseController<VehiculoModel>(Constantes.MESSAGE_NO_AUTHORIZATION));
 		}catch(ParkingFullException e) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseController<VehiculoModel>(Constantes.FULL_MESSAGE));
-		} catch (Exception e) {  
+		} catch(GeneralException e) {  
 			  throw new RuntimeException("context");
 		}
 		
