@@ -3,7 +3,6 @@ package com.ceiba.estacionamiento.jenniffer.alvarez.service;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;

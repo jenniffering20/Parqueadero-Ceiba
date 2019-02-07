@@ -22,7 +22,7 @@ public class PaymentCalculationTest {
 		BigDecimal valorEsperado=new BigDecimal("2000");
 		BigDecimal valorReal;
 		
-		valorReal = paymentCalculation.PaymentCalculationCar(120L);	
+		valorReal = paymentCalculation.paymentCalculationCar(120L);	
 	
 		assertEquals(valorEsperado, valorReal);
 	}
@@ -32,7 +32,7 @@ public class PaymentCalculationTest {
 		BigDecimal valorEsperado=new BigDecimal("1000");
 		BigDecimal valorReal;
 		
-		valorReal = paymentCalculation.PaymentCalculationMoto(120L,400);	
+		valorReal = paymentCalculation.paymentCalculationMoto(120L,400);	
 	
 		assertEquals(valorEsperado, valorReal);
 	}
@@ -42,7 +42,7 @@ public class PaymentCalculationTest {
 		BigDecimal valorEsperado=new BigDecimal("2500");
 		BigDecimal valorReal;
 		
-		valorReal = paymentCalculation.PaymentCalculationMoto(60L, 650);	
+		valorReal = paymentCalculation.paymentCalculationMoto(60L, 650);	
 	
 		assertEquals(valorEsperado, valorReal);
 	}
@@ -52,7 +52,7 @@ public class PaymentCalculationTest {
 		BigDecimal valorEsperado=new BigDecimal("17000");
 		BigDecimal valorReal;
 		
-		valorReal = paymentCalculation.PaymentCalculationCar(2881L);	
+		valorReal = paymentCalculation.paymentCalculationCar(2881L);	
 	
 		assertEquals(valorEsperado, valorReal);
 	}
@@ -62,7 +62,7 @@ public class PaymentCalculationTest {
 		BigDecimal valorEsperado=new BigDecimal("8500");
 		BigDecimal valorReal;
 		
-		valorReal = paymentCalculation.PaymentCalculationMoto(2881L,400);	
+		valorReal = paymentCalculation.paymentCalculationMoto(2881L,400);	
 	
 		assertEquals(valorEsperado, valorReal);
 	}
@@ -72,7 +72,7 @@ public class PaymentCalculationTest {
 		BigDecimal valorEsperado=new BigDecimal("10500");
 		BigDecimal valorReal;
 		
-		valorReal = paymentCalculation.PaymentCalculationMoto(2881L,650);	
+		valorReal = paymentCalculation.paymentCalculationMoto(2881L,650);	
 	
 		assertEquals(valorEsperado, valorReal);
 	}

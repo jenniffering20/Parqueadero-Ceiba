@@ -39,9 +39,9 @@ public class Bill implements BillService {
 		
 		if(vehiculoSalida.getTipo().equalsIgnoreCase(Constantes.CARRO)) {
 			
-			paymentCalculation = payment.PaymentCalculationCar(horas);
+			paymentCalculation = payment.paymentCalculationCar(horas);
 		}else {
-			paymentCalculation = payment.PaymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
+			paymentCalculation = payment.paymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
 		}
 		
 		vehiculoSalida.setTotalPago(paymentCalculation);

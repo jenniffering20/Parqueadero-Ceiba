@@ -13,7 +13,7 @@ public class PaymentCalculation implements PaymentCalculationService{
 		super();
 	}
 
-	public BigDecimal PaymentCalculationCar (long hora) {
+	public BigDecimal paymentCalculationCar (long hora) {
 		BigDecimal pay;
 		
 		long horas= hora / 60L;
@@ -47,7 +47,7 @@ public class PaymentCalculation implements PaymentCalculationService{
 	
 	
 	
-	public BigDecimal PaymentCalculationMoto (long hora,int cilindraje) {
+	public BigDecimal paymentCalculationMoto (long hora,int cilindraje) {
 		BigDecimal pay;
 		
 		long horas= hora / 60L;
