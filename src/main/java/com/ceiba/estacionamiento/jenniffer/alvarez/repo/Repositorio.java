@@ -10,6 +10,7 @@ public interface Repositorio extends MongoRepository<VehiculoModel,String>{
 	public VehiculoModel findByPlaca(String placa);
 	public List<VehiculoModel> findByTipo(String tipo);
 	public Long countByTipo(String tipo);
+
 	 
 	
 	

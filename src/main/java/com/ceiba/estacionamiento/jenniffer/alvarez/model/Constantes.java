@@ -16,7 +16,7 @@ public class Constantes {
 	public static final String VEHICLE_REGISTERED_SUCCESSFUL="Registro Exitoso";
 	public static final String CHECKED_VEHICLE="Vehiculo facturado";
 	public static final String NOT_VEHICLES="No hay vehiculos en el parqueadero";
-	public static final String NOT_VEHICLE_ISPARKING="El vehiculo no se encuantra en el parqueadero";
+	public static final String NOT_VEHICLE_ISPARKING="El vehiculo no se encuentra en el parqueadero";
 	public static final String LETRA_RESTRICCION = "A";
 	public static final String CARRO="CARRO";
 	public static final String MOTO="MOTO";

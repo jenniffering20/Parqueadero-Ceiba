@@ -15,11 +15,22 @@ public class Bill implements BillService {
 	public Bill() {
 		super();
 	}
+	
+	private LocalDateTime day;
+
+	public LocalDateTime getDay() {
+		return day;
+	}
+
+	public void setDay(LocalDateTime day) {
+		this.day = day;
+	}
+	
 
 	@Override
 	public VehiculoModel goOut(VehiculoModel vehiculoSalida) {
-		
-		vehiculoSalida.setFechaSalida(LocalDateTime.now());
+		setDay(LocalDateTime.now());
+		vehiculoSalida.setFechaSalida(getDay());
 		
 		PaymentCalculation payment=new PaymentCalculation();
 		
@@ -34,6 +45,7 @@ public class Bill implements BillService {
 		}
 		
 		vehiculoSalida.setTotalPago(paymentCalculation);
+		vehiculoSalida.setTipo("CheckOut");
 		
 		return vehiculoSalida;
 	}

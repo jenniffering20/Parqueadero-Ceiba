@@ -61,7 +61,7 @@ public class Controller {
 		if(vehiculo==null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseController<VehiculoModel>(Constantes.NOT_VEHICLE_ISPARKING));
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>(vehiculo));
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<VehiculoModel>("VEHICULO",vehiculo));
 		}
 	
  
