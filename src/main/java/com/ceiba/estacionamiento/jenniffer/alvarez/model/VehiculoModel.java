@@ -25,14 +25,6 @@ public class VehiculoModel {
 	
 	}
 	
-	public VehiculoModel(String tipo,String placa,int cilindraje,LocalDateTime fechaIngreso) {
-		this.tipo=tipo;
-		this.placa=placa;	
-		this.cilindraje= cilindraje;
-		this.fechaIngreso= fechaIngreso;
-
-	
-	}
 	
 	public VehiculoModel() {
 		
@@ -92,10 +84,7 @@ public class VehiculoModel {
 	public void setTotalPago(BigDecimal totalPago) {
 		this.totalPago = totalPago;
 	}
-	@Override
-	public String toString() {
-		return "VehiculoModel [id=" + registro + ", tipo=" + tipo + ", placa=" + placa;
-	}
+	
 	
 	
 }
