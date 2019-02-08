@@ -5,7 +5,6 @@ public class TypeInvalidException extends GeneralException{
 	
 	public TypeInvalidException() {
 		super(Constantes.NOT_VALID_TYPE);
-		// TODO Auto-generated constructor stub
 	}
 
 	

@@ -109,6 +109,7 @@ public class Parking implements ParkingService {
 	public ResponseController<List<VehiculoModel>> checkOut(String placa) {
 		BillService bill = new Bill();
 		VehiculoModel vehiculoToLeave = findVehiculo(placa);
+		vehiculoToLeave.setFechaSalida(LocalDateTime.now());
 		VehiculoModel vehiculoToUpdate= bill.goOut(vehiculoToLeave);
 		repositorio.save(vehiculoToUpdate);
 	

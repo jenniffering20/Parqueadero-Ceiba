@@ -10,6 +10,9 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
+
+import ch.qos.logback.classic.Logger;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
@@ -48,7 +51,7 @@ public class Controller {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseController<VehiculoModel>(Constantes.FULL_MESSAGE));
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseController<VehiculoModel>(Constantes.VEHICLE_REGISTERED_SUCCESSFUL,parkingService.findVehiculo(vehiculo.getPlaca())));
 			
 	}
 	

@@ -21,7 +21,6 @@ public class Bill implements BillService {
 	@Override
 	public VehiculoModel goOut(VehiculoModel vehiculoSalida) {
 		
-		vehiculoSalida.setFechaSalida(LocalDateTime.now());
 		PaymentCalculation payment=new PaymentCalculation();
 		
 		BigDecimal paymentCalculation;

@@ -52,24 +52,23 @@ public class BillTest {
 		assertNotEquals(horasEsperadas, horasReales);
 	}
 	
-	/*
+	
 	@Test 
 	public void gotOutOk() {
 		
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
-		vehiculoCar = new VehiculoModel("CARRO","RRO789",0,fechaEntrada);
-		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 10, 00);
+		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
+		vehiculoCar.setFechaIngreso(fechaEntrada);
+		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
 		vehiculoCar.setFechaSalida(fechaSalida);
 		BigDecimal totalPago=new BigDecimal("2000");
 		
-	
 		bill.goOut(vehiculoCar);
 		 
-
 		assertEquals(totalPago,vehiculoCar.getTotalPago());
 		
 		
 	}
-	*/
+	
 
 }
