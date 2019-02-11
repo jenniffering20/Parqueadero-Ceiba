@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Bill;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 
 
@@ -18,7 +18,7 @@ public class BillTest {
 	@Mock
 	private Repositorio repositorio;
 	
-	private VehiculoModel vehiculoCar;
+	private Vehiculo vehiculoCar;
 	
 	@Before
 	public void setup() {
@@ -54,7 +54,7 @@ public class BillTest {
 	public void gotOutOk() {
 		
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
-		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
+		vehiculoCar = new Vehiculo("CARRO","RRO789",0);
 		vehiculoCar.setFechaIngreso(fechaEntrada);
 		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
 		vehiculoCar.setFechaSalida(fechaSalida);
@@ -71,7 +71,7 @@ public class BillTest {
 	public void gotOutNotOk() {
 		
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
-		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
+		vehiculoCar = new Vehiculo("CARRO","RRO789",0);
 		vehiculoCar.setFechaIngreso(fechaEntrada);
 		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
 		vehiculoCar.setFechaSalida(fechaSalida);

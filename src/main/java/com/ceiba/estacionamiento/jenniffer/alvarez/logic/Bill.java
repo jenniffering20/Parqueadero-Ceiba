@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 
 public class Bill implements BillService {
@@ -19,7 +19,7 @@ public class Bill implements BillService {
 	
 
 	@Override
-	public VehiculoModel goOut(VehiculoModel vehiculoSalida) {
+	public Vehiculo goOut(Vehiculo vehiculoSalida) {
 		
 		PaymentCalculation payment=new PaymentCalculation();
 		

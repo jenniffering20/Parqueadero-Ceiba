@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Estacionamientoo")
 
-public class VehiculoModel {
+public class Vehiculo {
 	@Id
 	private String registro;
 	private String tipo;
@@ -19,7 +19,7 @@ public class VehiculoModel {
 
 
 	
-	public VehiculoModel(String tipo,String placa,int cilindraje) {
+	public Vehiculo(String tipo,String placa,int cilindraje) {
 		this.tipo=tipo;
 		this.placa=placa;	
 		this.cilindraje= cilindraje;
@@ -28,7 +28,7 @@ public class VehiculoModel {
 	}
 	
 	
-	public VehiculoModel() {
+	public Vehiculo() {
 		
 	}
 	

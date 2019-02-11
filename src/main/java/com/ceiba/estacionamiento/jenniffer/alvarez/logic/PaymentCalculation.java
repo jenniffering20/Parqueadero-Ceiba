@@ -14,7 +14,7 @@ public class PaymentCalculation implements PaymentCalculationService{
 	}
 
 	public BigDecimal paymentCalculationCar (long hora) {
-		BigDecimal pay;
+		BigDecimal pay = null;
 		
 		long horas= hora / 60L;
 		long minutos= hora % 60L;

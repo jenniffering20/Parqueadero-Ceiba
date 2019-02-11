@@ -14,12 +14,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidException;
-import com.ceiba.estacionamiento.jenniffer.alvarez.exception.GeneralException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DomainException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
-import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parking;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.VehiculoModel;
+import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parqueadero;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
@@ -34,9 +34,9 @@ public class ParkingTest {
 	//@InjectMocks
 	private ParkingService parkingReposity;
 	
-	private VehiculoModel vehiculoCar;
-	private VehiculoModel vehiculoMoto;
-	private Parking parking;
+	private Vehiculo vehiculoCar;
+	private Vehiculo vehiculoMoto;
+	private Parqueadero parking;
 
 
 	@Before
@@ -48,10 +48,10 @@ public class ParkingTest {
 		parkingReposity = Mockito.mock(ParkingService.class);
 		
 		
-		vehiculoCar = new VehiculoModel("CARRO","RRO789",0);
-		vehiculoMoto = new VehiculoModel("MOTO", "XME11d", 650);
+		vehiculoCar = new Vehiculo("CARRO","RRO789",0);
+		vehiculoMoto = new Vehiculo("MOTO", "XME11d", 650);
 
-		parking = new Parking(repositorio);
+		parking = new Parqueadero(repositorio);
 	}
 
 	
@@ -59,8 +59,8 @@ public class ParkingTest {
 	@Test
 	public void checkInTestReady() throws Exception {
 
-		parkingReposity.checkIn(vehiculoCar);
-		Mockito.verify(parkingReposity).checkIn(vehiculoCar);
+		parkingReposity.ingresar(vehiculoCar);
+		Mockito.verify(parkingReposity).ingresar(vehiculoCar);
 	}
 	
 	@Test
@@ -118,7 +118,7 @@ public class ParkingTest {
 	public void findVehicleOk() {
 		
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
-		VehiculoModel vehiculo= parking.findVehiculo("RRO789");
+		Vehiculo vehiculo= parking.findVehiculo("RRO789");
 		
 		assertEquals(vehiculoCar,vehiculo);	
 	}
@@ -127,7 +127,7 @@ public class ParkingTest {
 	public void findVehicleNotOk() {
 		
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
-		VehiculoModel vehiculo= parking.findVehiculo("ERR781");
+		Vehiculo vehiculo= parking.findVehiculo("ERR781");
 		
 		assertNotEquals(vehiculoCar,vehiculo);	
 	}
@@ -171,70 +171,64 @@ public class ParkingTest {
 	}
 	
 	@Test(expected = ParkingFullException.class)
-	public void checkInFullParkingException() throws GeneralException{
+	public void checkInFullParkingException() throws DomainException{
 		Long fullCarro = (long) 20;
 		
 		parking.setFullCarros(fullCarro);
-		parking.checkIn(vehiculoCar);
+		parking.ingresar(vehiculoCar);
 	}
 	
 	@Test(expected = TypeInvalidException.class)
-	public void checkInInvalidTypeException() throws GeneralException{
-		VehiculoModel vehiculoSinTipo = new VehiculoModel("","RRO789",0);	
-		parking.checkIn(vehiculoSinTipo);
+	public void checkInInvalidTypeException() throws DomainException{
+		Vehiculo vehiculoSinTipo = new Vehiculo("","RRO789",0);	
+		parking.ingresar(vehiculoSinTipo);
 	}
 	
 	@Test(expected =DayNotValidException.class)
-	public void checkInDayNotValidExceptionForPlacaStarWithA() throws GeneralException{
+	public void checkInDayNotValidExceptionForPlacaStarWithA() throws DomainException{
 		
 		LocalDateTime day= LocalDateTime.now();
 		LocalDateTime notValidDay = day.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
-		VehiculoModel vehiculoCarplacaWithA = new VehiculoModel("CARRO","ARO789",0);
+		Vehiculo vehiculoCarplacaWithA = new Vehiculo("CARRO","ARO789",0);
 
 		parking.validDate(notValidDay);
 		parking.setDay(notValidDay);
-		parking.checkIn(vehiculoCarplacaWithA);
+		parking.ingresar(vehiculoCarplacaWithA);
 		
 	}
 	
 	@Test(expected =RegisteredVehicleException.class)
-	public void checkInVehicleRegistered()  throws GeneralException{
+	public void checkInVehicleRegistered()  throws DomainException{
 		
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
-		VehiculoModel vehiculoRegistered = new VehiculoModel("CARRO","RRO789",0);
+		Vehiculo vehiculoRegistered = new Vehiculo("CARRO","RRO789",0);
 		
-		parking.checkIn(vehiculoRegistered);
+		parking.ingresar(vehiculoRegistered);
 	}
 	
 	@Test
 	public void testAllVehicles(){
-		List<VehiculoModel>vehiculos = new ArrayList<VehiculoModel>();
+		List<Vehiculo>vehiculos = new ArrayList<Vehiculo>();
 		vehiculos.add(vehiculoCar);
 		
 		when(repositorio.findAll()).thenReturn(vehiculos);
-		ResponseController<List<VehiculoModel>> responseController = parking.findAll();
+		ResponseController<List<Vehiculo>> responseController = parking.findAll();
 		
 		assertFalse(responseController.getDato().isEmpty());
 	}
 	
 	@Test
 	public void testAllVehiclesNotVehicles(){
-		List<VehiculoModel>vehiculos = new ArrayList<VehiculoModel>();
+		List<Vehiculo>vehiculos = new ArrayList<Vehiculo>();
 		
 		
 		when(repositorio.findAll()).thenReturn(vehiculos);
-		ResponseController<List<VehiculoModel>> responseController = parking.findAll();
+		ResponseController<List<Vehiculo>> responseController = parking.findAll();
 		
 		assertEquals(responseController.getMensage(),Constantes.NOT_VEHICLES);
 	}
 	
-	@Test
-	public void testCheckInVehicleSuccessful() throws GeneralException{
-		
-		ResponseController<List<VehiculoModel>> responseController = parking.checkIn(vehiculoCar);
-		
-		assertEquals(responseController.getMensage(),Constantes.VEHICLE_REGISTERED_SUCCESSFUL);
-	}
+	
 	
 	@Test 
 	public void testDayOk() {
