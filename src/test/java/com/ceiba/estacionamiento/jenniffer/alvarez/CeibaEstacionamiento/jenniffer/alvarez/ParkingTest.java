@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DayNotValidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DomainException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.VehiculoNoParqueadoException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parqueadero;
@@ -123,13 +124,13 @@ public class ParkingTest {
 		assertEquals(vehiculoCar,vehiculo);	
 	}
 	
-	@Test
+	
+	@Test(expected = VehiculoNoParqueadoException.class)
 	public void findVehicleNotOk() throws DomainException {
 		
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
 		Vehiculo vehiculo= parking.findVehiculo("ERR781");
-		
-		assertNotEquals(vehiculoCar,vehiculo);	
+			
 	}
 	
 	@Test
