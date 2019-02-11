@@ -28,6 +28,16 @@ public class PaymentCalculationTest {
 	}
 	
 	@Test
+	public void paymentCalculationCarTestError() {
+		BigDecimal valorEsperado=new BigDecimal("1000");
+		BigDecimal valorReal;
+		
+		valorReal = paymentCalculation.paymentCalculationCar(120L);	
+	
+		assertNotEquals(valorEsperado, valorReal);
+	}
+	
+	@Test
 	public void paymentCalculationMotoTestCilindrajenMenor() {
 		BigDecimal valorEsperado=new BigDecimal("1000");
 		BigDecimal valorReal;
@@ -35,6 +45,16 @@ public class PaymentCalculationTest {
 		valorReal = paymentCalculation.paymentCalculationMoto(120L,400);	
 	
 		assertEquals(valorEsperado, valorReal);
+	}
+	
+	@Test
+	public void paymentCalculationMotoTestCilindrajenMenorError() {
+		BigDecimal valorEsperado=new BigDecimal("500");
+		BigDecimal valorReal;
+		
+		valorReal = paymentCalculation.paymentCalculationMoto(120L,400);	
+	
+		assertNotEquals(valorEsperado, valorReal);
 	}
 	
 	@Test
@@ -46,6 +66,15 @@ public class PaymentCalculationTest {
 	
 		assertEquals(valorEsperado, valorReal);
 	}
+	@Test
+	public void paymentCalculationMotoTestCilindrajenMayorError() {
+		BigDecimal valorEsperado=new BigDecimal("500");
+		BigDecimal valorReal;
+		
+		valorReal = paymentCalculation.paymentCalculationMoto(60L, 650);	
+	
+		assertNotEquals(valorEsperado, valorReal);
+	}
 	
 	@Test
 	public void paymentCalculationCarTestDay() {
@@ -55,6 +84,15 @@ public class PaymentCalculationTest {
 		valorReal = paymentCalculation.paymentCalculationCar(2881L);	
 	
 		assertEquals(valorEsperado, valorReal);
+	}
+	@Test
+	public void paymentCalculationCarTestDayError() {
+		BigDecimal valorEsperado=new BigDecimal("1000");
+		BigDecimal valorReal;
+		
+		valorReal = paymentCalculation.paymentCalculationCar(2881L);	
+	
+		assertNotEquals(valorEsperado, valorReal);
 	}
 	
 	@Test
@@ -66,6 +104,15 @@ public class PaymentCalculationTest {
 	
 		assertEquals(valorEsperado, valorReal);
 	}
+	@Test
+	public void paymentCalculationMotoCilindrajeMenorTestDayError() {
+		BigDecimal valorEsperado=new BigDecimal("6500");
+		BigDecimal valorReal;
+		
+		valorReal = paymentCalculation.paymentCalculationMoto(2881L,400);	
+	
+		assertNotEquals(valorEsperado, valorReal);
+	}
 	
 	@Test
 	public void paymentCalculationMotoCilindrajeMatorTestDay() {
@@ -75,6 +122,15 @@ public class PaymentCalculationTest {
 		valorReal = paymentCalculation.paymentCalculationMoto(2881L,650);	
 	
 		assertEquals(valorEsperado, valorReal);
+	}
+	@Test
+	public void paymentCalculationMotoCilindrajeMatorTestDayError() {
+		BigDecimal valorEsperado=new BigDecimal("1500");
+		BigDecimal valorReal;
+		
+		valorReal = paymentCalculation.paymentCalculationMoto(2881L,650);	
+	
+		assertNotEquals(valorEsperado, valorReal);
 	}
 
 

@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
+
 @RestController
 @RequestMapping("/")
 @CrossOrigin("*")
@@ -28,12 +30,12 @@ public class Parking implements ParkingService {
 
 	@Autowired
 	Repositorio repositorio;
+	
+	
 
 	public Parking(Repositorio repositorio) {
 		this.repositorio = repositorio;
 	}
-
-	
 
 
 	int fullCarros;
@@ -112,7 +114,7 @@ public class Parking implements ParkingService {
 		vehiculoToLeave.setFechaSalida(LocalDateTime.now());
 		VehiculoModel vehiculoToUpdate= bill.goOut(vehiculoToLeave);
 		repositorio.save(vehiculoToUpdate);
-	
+		
 		return new ResponseController<List<VehiculoModel>>(Constantes.CHECKED_VEHICLE);
 
 	}
