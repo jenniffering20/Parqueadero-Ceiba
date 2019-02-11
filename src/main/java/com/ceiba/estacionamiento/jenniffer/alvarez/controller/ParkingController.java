@@ -2,7 +2,7 @@ package com.ceiba.estacionamiento.jenniffer.alvarez.controller;
 
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DomainException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import org.springframework.web.bind.annotation.*;
@@ -27,35 +27,29 @@ public class ParkingController {
 	// POST
 	@PostMapping("/estacionamientos")
 	public void ingresarVehiculo(@RequestBody Vehiculo vehiculo) throws DomainException {
-		parkingService.ingresar(vehiculo);
+		parkingService.ingresarVehiculo(vehiculo);
 	}
 
 	// GET
 
 	@RequestMapping(value = "/estacionamientos/vehiculos/{placa}", method = RequestMethod.GET)
-	public ResponseEntity<ResponseController<Vehiculo>> getByPlaca(@PathVariable("placa") String placa) {
-		Vehiculo vehiculo = parkingService.findVehiculo(placa);
-
-		if (vehiculo == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResponseController<Vehiculo>(Constantes.NOT_VEHICLE_ISPARKING));
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(new ResponseController<Vehiculo>("VEHICULO", vehiculo));
+	public Vehiculo getByPlaca(@PathVariable("placa") String placa) throws DomainException {
+		return  parkingService.findVehiculo(placa);
 	}
 
 	
 	@RequestMapping(value = "/estacionamientos/vehiculos", method = RequestMethod.GET)
-	public ResponseController<List<Vehiculo>> getAllVehiculos() {
+	public RespuestaParaControlador<List<Vehiculo>> getAllVehiculos() {
 		return parkingService.findAll();
 	}
 
-	
+	//GETSALIDA
 	@RequestMapping(value = "/estacionamientos/salida/{placa}", method = RequestMethod.GET)
-	public ResponseEntity<ResponseController<Vehiculo>> checkOutVehiculo(@PathVariable("placa") String placa) {
-		parkingService.checkOut(placa);
+	public ResponseEntity<RespuestaParaControlador<Vehiculo>> checkOutVehiculo(@PathVariable("placa") String placa) throws DomainException {
+		parkingService.facturacionVehiculo(placa);
 		Vehiculo vehicleCheckOut = parkingService.findVehiculo(placa + "s");
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(new ResponseController<Vehiculo>(Constantes.CHECKED_VEHICLE, vehicleCheckOut));
+				.body(new RespuestaParaControlador<Vehiculo>(Constantes.CHECKED_VEHICLE, vehicleCheckOut));
 
 	}
 

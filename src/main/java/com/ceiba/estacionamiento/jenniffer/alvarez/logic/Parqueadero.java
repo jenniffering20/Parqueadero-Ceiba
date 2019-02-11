@@ -9,8 +9,9 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.DomainException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
+import com.ceiba.estacionamiento.jenniffer.alvarez.exception.VehiculoNoParqueadoException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
@@ -59,7 +60,7 @@ public class Parqueadero implements ParkingService {
 	}
 
 	@Override
-	public void ingresar(Vehiculo vehiculo) throws DomainException {
+	public void ingresarVehiculo(Vehiculo vehiculo) throws DomainException {
 		if (vehiculo.getTipo() == "") {
 			throw new TypeInvalidException();
 		}
@@ -73,7 +74,7 @@ public class Parqueadero implements ParkingService {
 
 			throw new DayNotValidException();
 		}
-		if (findVehiculo(vehiculo.getPlaca()) == null) {
+		if (repositorio.findByPlaca(vehiculo.getPlaca())== null) {
 
 			Vehiculo newVehiculo = new Vehiculo(vehiculo.getTipo(), vehiculo.getPlaca(),
 					vehiculo.getCilindraje());
@@ -88,20 +89,20 @@ public class Parqueadero implements ParkingService {
 
 	}
 
-	public LocalDateTime date(LocalDateTime day) {
+	public LocalDateTime fecha(LocalDateTime day) {
 		setDay(day);
 		return getDay();
 	}
 
 	@Override
-	public ResponseController<List<Vehiculo>> checkOut(String placa) {
+	public Vehiculo facturacionVehiculo(String placa) throws DomainException {
 		BillService bill = new Bill();
 		Vehiculo vehiculoToLeave = findVehiculo(placa);
 		vehiculoToLeave.setFechaSalida(LocalDateTime.now());
 		Vehiculo vehiculoToUpdate = bill.goOut(vehiculoToLeave);
 		repositorio.save(vehiculoToUpdate);
 
-		return new ResponseController<List<Vehiculo>>(Constantes.CHECKED_VEHICLE);
+		return vehiculoToUpdate;
 
 	}
 
@@ -140,18 +141,24 @@ public class Parqueadero implements ParkingService {
 	}
 
 	@Override
-	public Vehiculo findVehiculo(String placa) {
-		return repositorio.findByPlaca(placa);
+	public Vehiculo findVehiculo(String placa) throws DomainException {
+	
+		Vehiculo vehiculoEnconntrado = repositorio.findByPlaca(placa);
+		if(vehiculoEnconntrado == null) {
+			throw new VehiculoNoParqueadoException();
+		}else {
+		return vehiculoEnconntrado;
+		}
 
 	}
 
 	@Override
-	public ResponseController<List<Vehiculo>> findAll() {
+	public RespuestaParaControlador<List<Vehiculo>> findAll() {
 		List<Vehiculo> vehicleList = repositorio.findAll();
 		if (vehicleList.isEmpty()) {
-			return new ResponseController<List<Vehiculo>>(Constantes.NOT_VEHICLES);
+			return new RespuestaParaControlador<List<Vehiculo>>(Constantes.NOT_VEHICLES);
 		} else {
-			return new ResponseController<List<Vehiculo>>(vehicleList);
+			return new RespuestaParaControlador<List<Vehiculo>>(vehicleList);
 		}
 	}
 

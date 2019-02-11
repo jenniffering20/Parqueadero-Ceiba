@@ -1,21 +1,21 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.model;
 
-public class ResponseController<T> {
+public class RespuestaParaControlador<T> {
 
 	private String mensage;
 	private T dato;
 	
 	
-	public ResponseController(String mensage, T dato) {
+	public RespuestaParaControlador(String mensage, T dato) {
 		this.mensage = mensage;
 		this.dato = dato;
 	}
 
-	public ResponseController(String mensage) {
+	public RespuestaParaControlador(String mensage) {
 		this.mensage = mensage;
 	}
 	
-	public ResponseController(T dato) {
+	public RespuestaParaControlador(T dato) {
 		this.dato = dato;
 	}
 

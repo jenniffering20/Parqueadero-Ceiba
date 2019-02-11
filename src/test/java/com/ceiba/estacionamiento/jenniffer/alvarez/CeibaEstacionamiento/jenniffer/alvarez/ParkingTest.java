@@ -21,7 +21,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parqueadero;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.ResponseController;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 
@@ -59,15 +59,15 @@ public class ParkingTest {
 	@Test
 	public void checkInTestReady() throws Exception {
 
-		parkingReposity.ingresar(vehiculoCar);
-		Mockito.verify(parkingReposity).ingresar(vehiculoCar);
+		parkingReposity.ingresarVehiculo(vehiculoCar);
+		Mockito.verify(parkingReposity).ingresarVehiculo(vehiculoCar);
 	}
 	
 	@Test
 	public void checkOutTestReady() throws Exception {
 
-		parkingReposity.checkOut(vehiculoCar.getPlaca());
-		Mockito.verify(parkingReposity).checkOut(vehiculoCar.getPlaca());
+		parkingReposity.facturacionVehiculo(vehiculoCar.getPlaca());
+		Mockito.verify(parkingReposity).facturacionVehiculo(vehiculoCar.getPlaca());
 	}
 	
 	@Test
@@ -115,7 +115,7 @@ public class ParkingTest {
 	}
 	
 	@Test
-	public void findVehicleOk() {
+	public void findVehicleOk() throws DomainException {
 		
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
 		Vehiculo vehiculo= parking.findVehiculo("RRO789");
@@ -124,7 +124,7 @@ public class ParkingTest {
 	}
 	
 	@Test
-	public void findVehicleNotOk() {
+	public void findVehicleNotOk() throws DomainException {
 		
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
 		Vehiculo vehiculo= parking.findVehiculo("ERR781");
@@ -175,13 +175,13 @@ public class ParkingTest {
 		Long fullCarro = (long) 20;
 		
 		parking.setFullCarros(fullCarro);
-		parking.ingresar(vehiculoCar);
+		parking.ingresarVehiculo(vehiculoCar);
 	}
 	
 	@Test(expected = TypeInvalidException.class)
 	public void checkInInvalidTypeException() throws DomainException{
 		Vehiculo vehiculoSinTipo = new Vehiculo("","RRO789",0);	
-		parking.ingresar(vehiculoSinTipo);
+		parking.ingresarVehiculo(vehiculoSinTipo);
 	}
 	
 	@Test(expected =DayNotValidException.class)
@@ -193,7 +193,7 @@ public class ParkingTest {
 
 		parking.validDate(notValidDay);
 		parking.setDay(notValidDay);
-		parking.ingresar(vehiculoCarplacaWithA);
+		parking.ingresarVehiculo(vehiculoCarplacaWithA);
 		
 	}
 	
@@ -203,7 +203,7 @@ public class ParkingTest {
 		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
 		Vehiculo vehiculoRegistered = new Vehiculo("CARRO","RRO789",0);
 		
-		parking.ingresar(vehiculoRegistered);
+		parking.ingresarVehiculo(vehiculoRegistered);
 	}
 	
 	@Test
@@ -212,7 +212,7 @@ public class ParkingTest {
 		vehiculos.add(vehiculoCar);
 		
 		when(repositorio.findAll()).thenReturn(vehiculos);
-		ResponseController<List<Vehiculo>> responseController = parking.findAll();
+		RespuestaParaControlador<List<Vehiculo>> responseController = parking.findAll();
 		
 		assertFalse(responseController.getDato().isEmpty());
 	}
@@ -223,7 +223,7 @@ public class ParkingTest {
 		
 		
 		when(repositorio.findAll()).thenReturn(vehiculos);
-		ResponseController<List<Vehiculo>> responseController = parking.findAll();
+		RespuestaParaControlador<List<Vehiculo>> responseController = parking.findAll();
 		
 		assertEquals(responseController.getMensage(),Constantes.NOT_VEHICLES);
 	}
@@ -234,7 +234,7 @@ public class ParkingTest {
 	public void testDayOk() {
 		LocalDateTime day=LocalDateTime.now();
 		
-		assertEquals(day, parking.date(day));
+		assertEquals(day, parking.fecha(day));
 	}
 	
 	
