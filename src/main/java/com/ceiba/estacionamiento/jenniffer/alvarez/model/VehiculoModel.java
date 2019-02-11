@@ -17,6 +17,7 @@ public class VehiculoModel {
 	private LocalDateTime fechaSalida;
 	private BigDecimal totalPago;
 
+
 	
 	public VehiculoModel(String tipo,String placa,int cilindraje) {
 		this.tipo=tipo;

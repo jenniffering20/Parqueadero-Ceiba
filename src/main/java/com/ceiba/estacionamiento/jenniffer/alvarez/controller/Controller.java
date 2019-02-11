@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
-
 @RestController
 @RequestMapping("/")
 @CrossOrigin("http://localhost:4200")
 public class Controller {
+	
+
 
 	@Autowired
 	ParkingService parkingService;

@@ -34,7 +34,7 @@ public class Bill implements BillService {
 		}
 		
 		vehiculoSalida.setTotalPago(paymentCalculation);
-		vehiculoSalida.setTipo("CheckOut");
+		vehiculoSalida.setTipo("_"+vehiculoSalida.getTipo());
 		vehiculoSalida.setPlaca(vehiculoSalida.getPlaca()+"s");
 		
 		return vehiculoSalida;

@@ -6,9 +6,7 @@ import java.math.BigDecimal;
 public class Constantes {
 	
 	
-	public Constantes() {
-		super();
-	}
+	
 	public static final BigDecimal PRECIO_HORA_CARRO=new BigDecimal("1000");
 	public static final BigDecimal PRECIO_HORA_MOTO=new BigDecimal("500");
 	public static final BigDecimal PRECIO_DIA_CARRO=new BigDecimal("8000");

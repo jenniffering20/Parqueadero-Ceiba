@@ -1,7 +1,6 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.CeibaEstacionamiento.jenniffer.alvarez;
 
 import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.junit.Before;
@@ -20,7 +19,6 @@ public class BillTest {
 	private Repositorio repositorio;
 	
 	private VehiculoModel vehiculoCar;
-	private VehiculoModel vehiculoMoto;
 	
 	@Before
 	public void setup() {
@@ -28,7 +26,6 @@ public class BillTest {
 		repositorio = Mockito.mock(Repositorio.class);
 		
 		
-		vehiculoMoto = new VehiculoModel("MOTO", "XME11d", 650);
 	}
 
 	@Test
