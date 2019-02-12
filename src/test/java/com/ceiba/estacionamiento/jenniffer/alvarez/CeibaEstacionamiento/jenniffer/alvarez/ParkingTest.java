@@ -21,18 +21,18 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleEx
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parqueadero;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
-import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 
 
 public class ParkingTest {
 	
 	@Mock
-	private Repositorio repositorio;
+	private RepositorioVehiculo repositorio;
 	
-	//@InjectMocks
+	
 	private ParkingService parkingReposity;
 	
 	private Vehiculo vehiculoCar;
@@ -45,7 +45,7 @@ public class ParkingTest {
 		
 		MockitoAnnotations.initMocks(this);
 		
-		repositorio = Mockito.mock(Repositorio.class);
+		repositorio = Mockito.mock(RepositorioVehiculo.class);
 		parkingReposity = Mockito.mock(ParkingService.class);
 		
 		
@@ -160,14 +160,14 @@ public class ParkingTest {
 	@Test
 	public void restrictionLetterOk() {
 		
-		Boolean restrictionLetter = parking.restrictionLetter("A");
+		Boolean restrictionLetter = parking.restriccionPlacasQueInicianConLetraA("A");
 		assertTrue(restrictionLetter);
 	}
 	
 	@Test
 	public void restrictionLetterNotOk() {
 		
-		Boolean restrictionLetter = parking.restrictionLetter("B");
+		Boolean restrictionLetter = parking.restriccionPlacasQueInicianConLetraA("B");
 		assertFalse(restrictionLetter);
 	}
 	
@@ -226,7 +226,7 @@ public class ParkingTest {
 		when(repositorio.findAll()).thenReturn(vehiculos);
 		RespuestaParaControlador<List<Vehiculo>> responseController = parking.findAll();
 		
-		assertEquals(responseController.getMensage(),Constantes.NOT_VEHICLES);
+		assertEquals(responseController.getMensage(),ConstantesMensajes.NOT_VEHICLES);
 	}
 	
 	

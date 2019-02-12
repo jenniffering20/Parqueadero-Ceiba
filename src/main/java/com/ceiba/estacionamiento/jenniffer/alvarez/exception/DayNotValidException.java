@@ -1,11 +1,11 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.exception;
 
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
 
 public class DayNotValidException extends DomainException{
 
 	public DayNotValidException() {
-		super(Constantes.MESSAGE_NO_AUTHORIZATION);
+		super(ConstantesMensajes.MESSAGE_NO_AUTHORIZATION);
 		
 	}
 

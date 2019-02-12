@@ -7,23 +7,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Bill;
+import com.ceiba.estacionamiento.jenniffer.alvarez.logic.FacturaI;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
-import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 
 
 public class BillTest {
-	private Bill bill;
+	private FacturaI bill;
 	
 	@Mock
-	private Repositorio repositorio;
+	private RepositorioVehiculo repositorio;
 	
 	private Vehiculo vehiculoCar;
 	
 	@Before
 	public void setup() {
-		bill= new Bill();
-		repositorio = Mockito.mock(Repositorio.class);
+		bill= new FacturaI();
+		repositorio = Mockito.mock(RepositorioVehiculo.class);
 		
 		
 	}

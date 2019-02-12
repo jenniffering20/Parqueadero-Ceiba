@@ -23,7 +23,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler({Throwable.class})
-    protected ResponseEntity<Object> handleConflictThoew(
+    protected ResponseEntity<Object> handleConflictThrow(
       RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, "Ha ocurrido un error....", 
           new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);

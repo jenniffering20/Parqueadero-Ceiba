@@ -10,10 +10,12 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.ParkingFullExceptio
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.VehiculoNoParqueadoException;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
-import com.ceiba.estacionamiento.jenniffer.alvarez.repo.Repositorio;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioFactura;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import java.util.List;
@@ -25,9 +27,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Parqueadero implements ParkingService {
 
 	@Autowired
-	Repositorio repositorio;
+	RepositorioVehiculo repositorio;
+	
+	@Autowired
+	RepositorioFactura repositorioFactura;
 
-	public Parqueadero(Repositorio repositorio) {
+	public Parqueadero(RepositorioVehiculo repositorio) {
 		this.repositorio = repositorio;
 	}
 
@@ -70,17 +75,19 @@ public class Parqueadero implements ParkingService {
 			throw new ParkingFullException();
 		}
 
-		if (restrictionLetter(vehiculo.getPlaca()) && validDate(getDay())) {
-
+		if (restriccionPlacasQueInicianConLetraA(vehiculo.getPlaca())) {
 			throw new DayNotValidException();
+			
 		}
 		if (repositorio.findByPlaca(vehiculo.getPlaca())== null) {
 
 			Vehiculo newVehiculo = new Vehiculo(vehiculo.getTipo(), vehiculo.getPlaca(),
-					vehiculo.getCilindraje());
+			vehiculo.getCilindraje());
 			setDay(LocalDateTime.now());
 			newVehiculo.setFechaIngreso(getDay());
 			repositorio.save(newVehiculo);
+			Factura factura = new Factura(newVehiculo);
+			repositorioFactura.save(factura);
 			UpdateNumberOfVehicles();
 
 		} else {
@@ -96,7 +103,7 @@ public class Parqueadero implements ParkingService {
 
 	@Override
 	public Vehiculo facturacionVehiculo(String placa) throws DomainException {
-		BillService bill = new Bill();
+		BillService bill = new FacturaI();
 		Vehiculo vehiculoToLeave = findVehiculo(placa);
 		vehiculoToLeave.setFechaSalida(LocalDateTime.now());
 		Vehiculo vehiculoToUpdate = bill.goOut(vehiculoToLeave);
@@ -106,31 +113,34 @@ public class Parqueadero implements ParkingService {
 
 	}
 
-	public Boolean restrictionLetter(String placa) {
-		return placa.toUpperCase().startsWith(Constantes.LETRA_RESTRICCION);
+	public Boolean restriccionPlacasQueInicianConLetraA(String placa) {
+		
+		 Boolean placaLetraA= placa.toUpperCase().startsWith(ConstantesMensajes.LETRA_RESTRICCION);
+		 Boolean fecha= validDate(LocalDateTime.now());
+		 return (placaLetraA && fecha);
+		 
 	}
 
 	public Boolean fullParking(String tipo) {
 		Boolean full = false;
 
-		full = (getFullCarros() == 20 && getFullMotos() == 10);
-
-		if (tipo.equalsIgnoreCase(Constantes.CARRO) && getFullCarros() == 20) {
+		full = (getFullCarros() == ConstantesMensajes.NUMERO_MAXIMO_CARROS_PARQUEADERO
+				&& getFullMotos() == ConstantesMensajes.NUMERO_MAXIMO_MOTOS_PARQUEADERO);
+		
+		if (tipo.equalsIgnoreCase(ConstantesMensajes.CARRO) && getFullCarros() == ConstantesMensajes.NUMERO_MAXIMO_CARROS_PARQUEADERO) {
 			full = true;
 		}
-
-		if (tipo.equalsIgnoreCase(Constantes.MOTO) && getFullMotos() == 10) {
+		
+		if (tipo.equalsIgnoreCase(ConstantesMensajes.MOTO) && getFullMotos() == ConstantesMensajes.NUMERO_MAXIMO_MOTOS_PARQUEADERO) {
 			full = true;
 		}
-
 		return full;
 	}
 
 	public Boolean validDate(LocalDateTime dateCheckIn) {
-		Boolean validDate = (dateCheckIn.getDayOfWeek().getValue() == 1 || dateCheckIn.getDayOfWeek().getValue() == 0)
-				? false
-				: true;
-		return validDate;
+		return(dateCheckIn.getDayOfWeek().getValue() != 0 || dateCheckIn.getDayOfWeek().getValue() != 1);
+				
+		
 	}
 
 	public void UpdateNumberOfVehicles() {
@@ -156,7 +166,7 @@ public class Parqueadero implements ParkingService {
 	public RespuestaParaControlador<List<Vehiculo>> findAll() {
 		List<Vehiculo> vehicleList = repositorio.findAll();
 		if (vehicleList.isEmpty()) {
-			return new RespuestaParaControlador<List<Vehiculo>>(Constantes.NOT_VEHICLES);
+			return new RespuestaParaControlador<List<Vehiculo>>(ConstantesMensajes.NOT_VEHICLES);
 		} else {
 			return new RespuestaParaControlador<List<Vehiculo>>(vehicleList);
 		}

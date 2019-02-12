@@ -1,10 +1,10 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.exception;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
 
 public class RegisteredVehicleException extends DomainException{
 
 	public RegisteredVehicleException() {
-		super(Constantes.REGISTERED_MESSAGE);
+		super(ConstantesMensajes.REGISTERED_MESSAGE);
 		
 	}
 

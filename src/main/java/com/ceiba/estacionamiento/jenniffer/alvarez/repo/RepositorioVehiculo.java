@@ -6,10 +6,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Repositorio extends MongoRepository<Vehiculo,String>{
+public interface RepositorioVehiculo extends MongoRepository<Vehiculo,String>{
 	public Vehiculo findByPlaca(String placa);
 	public List<Vehiculo> findByTipo(String tipo);
 	public Long countByTipo(String tipo);
+	public void delete(Vehiculo vehiculo);
 
 	 
 	

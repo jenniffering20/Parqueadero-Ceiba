@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 
-public class Bill implements BillService {
+public class FacturaI implements BillService {
 	
 	
 	
-	public Bill() {
+	public FacturaI() {
 		super();
 	}
 	
@@ -26,7 +26,7 @@ public class Bill implements BillService {
 		BigDecimal paymentCalculation;
 		long horas = calculateStay(vehiculoSalida.getFechaIngreso(), vehiculoSalida.getFechaSalida());
 		
-		if(vehiculoSalida.getTipo().equalsIgnoreCase(Constantes.CARRO)) {
+		if(vehiculoSalida.getTipo().equalsIgnoreCase(ConstantesMensajes.CARRO)) {
 			
 			paymentCalculation = payment.paymentCalculationCar(horas);
 		}else {

@@ -2,7 +2,7 @@ package com.ceiba.estacionamiento.jenniffer.alvarez.logic;
 
 import java.math.BigDecimal;
 
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Constantes;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesCalculoFactura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.PaymentCalculationService;
 
 public class PaymentCalculation implements PaymentCalculationService{
@@ -16,28 +16,28 @@ public class PaymentCalculation implements PaymentCalculationService{
 	public BigDecimal paymentCalculationCar (long hora) {
 		BigDecimal pay = null;
 		
-		long horas= hora / 60L;
-		long minutos= hora % 60L;
+		long horas= hora / ConstantesCalculoFactura.MINUTOS_HORAS;
+		long minutos= hora % ConstantesCalculoFactura.MINUTOS_HORAS;
 		if(minutos > 0L) {
 			horas=horas+1L;
 		}
 		
-		if(horas <= Constantes.DAY_HOUR) {
+		if(horas <= ConstantesCalculoFactura.DAY_HOUR) {
 			
-		if(horas < Constantes.DAY_FINISH_HOUR ) {
+		if(horas < ConstantesCalculoFactura.DAY_FINISH_HOUR ) {
 			
 			BigDecimal horasParking = BigDecimal.valueOf(horas);
-			 pay= horasParking.multiply(Constantes.PRECIO_HORA_CARRO);
+			 pay= horasParking.multiply(ConstantesCalculoFactura.PRECIO_HORA_CARRO);
 		}else{
 			BigDecimal horasParking = BigDecimal.valueOf(1L);
-			 pay= horasParking.multiply(Constantes.PRECIO_DIA_CARRO);
+			 pay= horasParking.multiply(ConstantesCalculoFactura.PRECIO_DIA_CARRO);
 		} 
 		}else{
 
-			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);
-			BigDecimal horasParking = BigDecimal.valueOf(horas % Constantes.DAY_HOUR);		
-			BigDecimal diasPayment= diasParking.multiply(Constantes.PRECIO_DIA_CARRO);
-			BigDecimal horasPayment= horasParking.multiply(Constantes.PRECIO_HORA_CARRO);
+			BigDecimal diasParking = BigDecimal.valueOf(horas/ConstantesCalculoFactura.DAY_HOUR);
+			BigDecimal horasParking = BigDecimal.valueOf(horas % ConstantesCalculoFactura.DAY_HOUR);		
+			BigDecimal diasPayment= diasParking.multiply(ConstantesCalculoFactura.PRECIO_DIA_CARRO);
+			BigDecimal horasPayment= horasParking.multiply(ConstantesCalculoFactura.PRECIO_HORA_CARRO);
 			
 			pay= diasPayment.add(horasPayment);	
 		}
@@ -48,40 +48,42 @@ public class PaymentCalculation implements PaymentCalculationService{
 	
 	
 	public BigDecimal paymentCalculationMoto (long hora,int cilindraje) {
-		BigDecimal pay;
+		BigDecimal pay= null;
 		
-		long horas= hora / 60L;
-		long minutos= hora % 60L;
+		long horas= hora / ConstantesCalculoFactura.MINUTOS_HORAS;
+		long minutos= hora % ConstantesCalculoFactura.MINUTOS_HORAS;
 		
 		if(minutos > 0L) {
 			horas=horas+1L;
 		}
 
-		if(horas <= Constantes.DAY_HOUR) {
-		if(horas < Constantes.DAY_FINISH_HOUR && horas <=Constantes.DAY_HOUR) {
+		if(horas <= ConstantesCalculoFactura.DAY_HOUR) {
+		if(horas < ConstantesCalculoFactura.DAY_FINISH_HOUR) {
 			
 			
 			BigDecimal horasParking = BigDecimal.valueOf(horas);
-			 pay= horasParking.multiply(Constantes.PRECIO_HORA_MOTO);
-		}else {
+			 pay= horasParking.multiply(ConstantesCalculoFactura.PRECIO_HORA_MOTO);
+		}
+		else {
 			BigDecimal horasParking = BigDecimal.valueOf(1L);
-			 pay= horasParking.multiply(Constantes.PRECIO_DIA_MOTO);
-		} 
+			 pay= horasParking.multiply(ConstantesCalculoFactura.PRECIO_DIA_MOTO);
+		}
 		}else {
 
-			BigDecimal diasParking = BigDecimal.valueOf(horas/Constantes.DAY_HOUR);
-			BigDecimal horasParking = BigDecimal.valueOf(horas % Constantes.DAY_HOUR);
-			BigDecimal diasPayment= diasParking.multiply(Constantes.PRECIO_DIA_MOTO);
-			BigDecimal horasPayment= horasParking.multiply(Constantes.PRECIO_HORA_MOTO);
+			BigDecimal diasParking = BigDecimal.valueOf(horas/ConstantesCalculoFactura.DAY_HOUR);
+			BigDecimal horasParking = BigDecimal.valueOf(horas % ConstantesCalculoFactura.DAY_HOUR);
+			BigDecimal diasPayment= diasParking.multiply(ConstantesCalculoFactura.PRECIO_DIA_MOTO);
+			BigDecimal horasPayment= horasParking.multiply(ConstantesCalculoFactura.PRECIO_HORA_MOTO);
 			
 			pay= diasPayment.add(horasPayment);	
 		}
 		
-		if(cilindraje > 500) {
-			pay= pay.add(Constantes.PRECIO_ADICION_CILINDRAJE);
+		if(cilindraje > ConstantesCalculoFactura.CILINDRAJE_PARA_COBRO_EXTA) {
+			pay= pay.add(ConstantesCalculoFactura.PRECIO_ADICION_CILINDRAJE);
 		}
 		
 		return pay;
 	}
+	
 
 }
