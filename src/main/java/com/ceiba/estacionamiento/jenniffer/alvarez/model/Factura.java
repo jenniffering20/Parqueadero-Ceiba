@@ -9,14 +9,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="Estacionamiento")
 public class Factura {
 	
+	
 	@Id
 	private String registro;
+	private String placa;
 	private Vehiculo vehiculo;
 	private LocalDateTime fechaIngreso;
 	private LocalDateTime fechaSalida;
 	private BigDecimal totalPago;
 	
-	 public Factura(Vehiculo vehiculo) {
+	 public Factura(String placa,Vehiculo vehiculo) {
+		 	this.placa=placa;
 			this.vehiculo = vehiculo;
 		}
 	
@@ -25,6 +28,14 @@ public class Factura {
 	}
 	
    
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
 
 	public void setVehiculo(Vehiculo vehiculo) {
 		this.vehiculo = vehiculo;

@@ -11,7 +11,6 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleEx
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.VehiculoNoParqueadoException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioFactura;
@@ -19,6 +18,8 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
@@ -27,13 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Parqueadero implements ParkingService {
 
 	@Autowired
-	RepositorioVehiculo repositorio;
+	RepositorioVehiculo repositorioVehiculo;
 	
 	@Autowired
 	RepositorioFactura repositorioFactura;
 
-	public Parqueadero(RepositorioVehiculo repositorio) {
-		this.repositorio = repositorio;
+	public Parqueadero(RepositorioFactura repositorio) {
+		this. repositorioFactura = repositorio;
 	}
 
 	int fullCarros;
@@ -64,54 +65,14 @@ public class Parqueadero implements ParkingService {
 		fullMotos = numeroVehiculos.intValue();
 	}
 
-	@Override
-	public void ingresarVehiculo(Vehiculo vehiculo) throws DomainException {
-		if (vehiculo.getTipo() == "") {
-			throw new TypeInvalidException();
-		}
-
-		if (fullParking(vehiculo.getTipo())) {
-
-			throw new ParkingFullException();
-		}
-
-		if (restriccionPlacasQueInicianConLetraA(vehiculo.getPlaca())) {
-			throw new DayNotValidException();
-			
-		}
-		if (repositorio.findByPlaca(vehiculo.getPlaca())== null) {
-
-			Vehiculo newVehiculo = new Vehiculo(vehiculo.getTipo(), vehiculo.getPlaca(),
-			vehiculo.getCilindraje());
-			setDay(LocalDateTime.now());
-			newVehiculo.setFechaIngreso(getDay());
-			repositorio.save(newVehiculo);
-			Factura factura = new Factura(newVehiculo);
-			repositorioFactura.save(factura);
-			UpdateNumberOfVehicles();
-
-		} else {
-			throw new RegisteredVehicleException();
-		}
-
-	}
+	
 
 	public LocalDateTime fecha(LocalDateTime day) {
 		setDay(day);
 		return getDay();
 	}
 
-	@Override
-	public Vehiculo facturacionVehiculo(String placa) throws DomainException {
-		BillService bill = new FacturaI();
-		Vehiculo vehiculoToLeave = findVehiculo(placa);
-		vehiculoToLeave.setFechaSalida(LocalDateTime.now());
-		Vehiculo vehiculoToUpdate = bill.goOut(vehiculoToLeave);
-		repositorio.save(vehiculoToUpdate);
-
-		return vehiculoToUpdate;
-
-	}
+	
 
 	public Boolean restriccionPlacasQueInicianConLetraA(String placa) {
 		
@@ -144,32 +105,79 @@ public class Parqueadero implements ParkingService {
 	}
 
 	public void UpdateNumberOfVehicles() {
-		Long cantidadVehiculosCarros = repositorio.countByTipo("carro");
-		Long cantidadVehiculosMotos = repositorio.countByTipo("moto");
+		Long cantidadVehiculosCarros = repositorioFactura.countByVehiculoTipo("carro");
+		Long cantidadVehiculosMotos = repositorioFactura.countByVehiculoTipo("moto");
 		setFullCarros(cantidadVehiculosCarros);
 		setFullMotos(cantidadVehiculosMotos);
+		
 	}
 
-	@Override
-	public Vehiculo findVehiculo(String placa) throws DomainException {
 	
-		Vehiculo vehiculoEnconntrado = repositorio.findByPlaca(placa);
-		if(vehiculoEnconntrado == null) {
+	//NUEVO RETORNA FACTURA
+	
+	@Override
+	public void ingresarVehiculoFactura(Vehiculo vehiculo) throws DomainException {
+		if (vehiculo.getTipo() == "") {
+			throw new TypeInvalidException();
+		}
+
+		if (fullParking(vehiculo.getTipo())) {
+
+			throw new ParkingFullException();
+		}
+
+		if (restriccionPlacasQueInicianConLetraA(vehiculo.getPlaca())) {
+			throw new DayNotValidException();
+			
+		}
+		if(repositorioFactura.findByPlaca(vehiculo.getPlaca())==null) {
+
+			Vehiculo newVehiculo = new Vehiculo(vehiculo.getTipo(), vehiculo.getPlaca(),vehiculo.getCilindraje());
+			setDay(LocalDateTime.now());
+			Factura facturaVehiculo = new Factura(vehiculo.getPlaca(),newVehiculo);
+			facturaVehiculo.setFechaIngreso(getDay());
+			repositorioFactura.save(facturaVehiculo);
+			repositorioVehiculo.save(newVehiculo);
+			
+			UpdateNumberOfVehicles();
+			
+		}else {
+			throw new RegisteredVehicleException();
+		}
+		
+		
+	}
+	
+	@Override
+	public Factura facturacionVehiculoSalida(String placa) throws DomainException {
+		BillService bill = new FacturaI();
+		Factura facturaVehiculo= encontrarFactura(placa);
+		
+		facturaVehiculo.setFechaSalida(LocalDateTime.now());
+	
+		Factura facturaToUpdate = bill.goOutt(facturaVehiculo);
+		repositorioFactura.save(facturaToUpdate);
+		UpdateNumberOfVehicles();
+		return facturaToUpdate;
+	}
+	
+	
+	public Factura encontrarFactura(String placa) throws DomainException {
+		Factura facturaVehiculo= repositorioFactura.findByPlaca(placa);
+		if(facturaVehiculo==null) {
 			throw new VehiculoNoParqueadoException();
 		}else {
-		return vehiculoEnconntrado;
+			return facturaVehiculo;
 		}
-
 	}
 
 	@Override
-	public RespuestaParaControlador<List<Vehiculo>> findAll() {
-		List<Vehiculo> vehicleList = repositorio.findAll();
-		if (vehicleList.isEmpty()) {
-			return new RespuestaParaControlador<List<Vehiculo>>(ConstantesMensajes.NOT_VEHICLES);
-		} else {
-			return new RespuestaParaControlador<List<Vehiculo>>(vehicleList);
-		}
+	public List<Factura> todasFacturas() {
+		return repositorioFactura.findAll();
+		
 	}
+	
+	
+	
 
 }

@@ -1,11 +1,12 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.service;
 
 
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
+
 
 public interface BillService {
 	
-	public Vehiculo goOut(Vehiculo vehiculoSalida);
 
+	public Factura goOutt(Factura vehiculoSalida);
 
 }

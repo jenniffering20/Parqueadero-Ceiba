@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.FacturaI;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 
@@ -19,7 +20,9 @@ public class BillTest {
 	private RepositorioVehiculo repositorio;
 	
 	private Vehiculo vehiculoCar;
-	
+	private Factura facturaCar;
+	private Factura facturaMoto;
+	private Vehiculo vehiculoMoto;
 	@Before
 	public void setup() {
 		bill= new FacturaI();
@@ -55,14 +58,15 @@ public class BillTest {
 		
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
 		vehiculoCar = new Vehiculo("CARRO","RRO789",0);
-		vehiculoCar.setFechaIngreso(fechaEntrada);
+		facturaCar= new Factura("RRO789",vehiculoCar);
+		facturaCar.setFechaIngreso(fechaEntrada);
 		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
-		vehiculoCar.setFechaSalida(fechaSalida);
+		facturaCar.setFechaSalida(fechaSalida);
 		BigDecimal totalPago=new BigDecimal("2000");
 		
-		bill.goOut(vehiculoCar);
+		bill.goOutt(facturaCar);
 		 
-		assertEquals(totalPago,vehiculoCar.getTotalPago());
+		assertEquals(totalPago,facturaCar.getTotalPago());
 		
 		
 	}
@@ -72,16 +76,49 @@ public class BillTest {
 		
 		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
 		vehiculoCar = new Vehiculo("CARRO","RRO789",0);
-		vehiculoCar.setFechaIngreso(fechaEntrada);
+		facturaCar= new Factura("RRO789",vehiculoCar);
+		facturaCar.setFechaIngreso(fechaEntrada);
 		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
-		vehiculoCar.setFechaSalida(fechaSalida);
+		facturaCar.setFechaSalida(fechaSalida);
 		BigDecimal totalPago=new BigDecimal("1000");
 		
-		bill.goOut(vehiculoCar);
+		bill.goOutt(facturaCar);
 		 
-		assertNotEquals(totalPago,vehiculoCar.getTotalPago());
+		assertNotEquals(totalPago,facturaCar.getTotalPago());
 		
 		
+	}
+	
+	@Test
+	public void gotOutMotoCilindrajeMenorOk() {
+		
+		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
+		vehiculoMoto = new Vehiculo("MOTO","RRO789",460);
+		facturaMoto= new Factura("RRO789",vehiculoMoto);
+		facturaMoto.setFechaIngreso(fechaEntrada);
+		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
+		facturaMoto.setFechaSalida(fechaSalida);
+		BigDecimal totalPago=new BigDecimal("1000");
+		
+		bill.goOutt(facturaMoto);
+		 
+		assertEquals(totalPago,facturaMoto.getTotalPago());
+	}
+	
+	@Test
+	public void gotOutMotoCilindrajeMayorOk() {
+		
+		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
+		vehiculoMoto = new Vehiculo("MOTO","RRO789",560);
+		facturaMoto= new Factura("RRO789",vehiculoMoto);
+		facturaMoto.setFechaIngreso(fechaEntrada);
+		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
+		facturaMoto.setFechaSalida(fechaSalida);
+		BigDecimal totalPago=new BigDecimal("3000");
+		
+		bill.goOutt(facturaMoto);
+		 
+		assertEquals(totalPago,facturaMoto.getTotalPago());
 	}
 	
 

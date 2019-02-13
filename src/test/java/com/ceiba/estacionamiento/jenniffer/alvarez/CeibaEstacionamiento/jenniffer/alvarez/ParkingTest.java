@@ -21,22 +21,24 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.exception.RegisteredVehicleEx
 import com.ceiba.estacionamiento.jenniffer.alvarez.exception.TypeInvalidException;
 import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parqueadero;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.RespuestaParaControlador;
-import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioFactura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 
 
 public class ParkingTest {
 	
-	@Mock
-	private RepositorioVehiculo repositorio;
+
 	
+	@Mock
+	private RepositorioFactura repositorioFactura;
 	
 	private ParkingService parkingReposity;
 	
 	private Vehiculo vehiculoCar;
 	private Vehiculo vehiculoMoto;
+	private Factura facturaCar;
+	private Factura facturaMoto;
 	private Parqueadero parking;
 
 
@@ -45,14 +47,16 @@ public class ParkingTest {
 		
 		MockitoAnnotations.initMocks(this);
 		
-		repositorio = Mockito.mock(RepositorioVehiculo.class);
+		repositorioFactura = Mockito.mock(RepositorioFactura.class);
 		parkingReposity = Mockito.mock(ParkingService.class);
 		
 		
 		vehiculoCar = new Vehiculo("CARRO","RRO789",0);
+		facturaCar= new Factura("RRO789", vehiculoCar);
 		vehiculoMoto = new Vehiculo("MOTO", "XME11d", 650);
+		facturaMoto= new Factura("XME11d", vehiculoMoto);
 
-		parking = new Parqueadero(repositorio);
+		parking = new Parqueadero(repositorioFactura);
 	}
 
 	
@@ -60,15 +64,15 @@ public class ParkingTest {
 	@Test
 	public void checkInTestReady() throws Exception {
 
-		parkingReposity.ingresarVehiculo(vehiculoCar);
-		Mockito.verify(parkingReposity).ingresarVehiculo(vehiculoCar);
+		parkingReposity.ingresarVehiculoFactura(vehiculoCar);
+		Mockito.verify(parkingReposity).ingresarVehiculoFactura(vehiculoCar);
 	}
 	
 	@Test
 	public void checkOutTestReady() throws Exception {
 
-		parkingReposity.facturacionVehiculo(vehiculoCar.getPlaca());
-		Mockito.verify(parkingReposity).facturacionVehiculo(vehiculoCar.getPlaca());
+		parkingReposity.facturacionVehiculoSalida(vehiculoCar.getPlaca());
+		Mockito.verify(parkingReposity).facturacionVehiculoSalida(vehiculoCar.getPlaca());
 	}
 	
 	@Test
@@ -118,18 +122,18 @@ public class ParkingTest {
 	@Test
 	public void findVehicleOk() throws DomainException {
 		
-		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
-		Vehiculo vehiculo= parking.findVehiculo("RRO789");
+		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(facturaCar);
+		Factura vehiculo= parking.encontrarFactura("RRO789");
 		
-		assertEquals(vehiculoCar,vehiculo);	
+		assertEquals(vehiculoCar,vehiculo.getVehiculo());	
 	}
 	
 	
 	@Test(expected = VehiculoNoParqueadoException.class)
 	public void findVehicleNotOk() throws DomainException {
 		
-		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
-		Vehiculo vehiculo= parking.findVehiculo("ERR781");
+		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(facturaCar);
+		Factura vehiculo= parking.encontrarFactura("ERR781");
 			
 	}
 	
@@ -176,13 +180,13 @@ public class ParkingTest {
 		Long fullCarro = (long) 20;
 		
 		parking.setFullCarros(fullCarro);
-		parking.ingresarVehiculo(vehiculoCar);
+		parking.ingresarVehiculoFactura(vehiculoCar);
 	}
 	
 	@Test(expected = TypeInvalidException.class)
 	public void checkInInvalidTypeException() throws DomainException{
 		Vehiculo vehiculoSinTipo = new Vehiculo("","RRO789",0);	
-		parking.ingresarVehiculo(vehiculoSinTipo);
+		parking.ingresarVehiculoFactura(vehiculoSinTipo);
 	}
 	
 	@Test(expected =DayNotValidException.class)
@@ -194,41 +198,31 @@ public class ParkingTest {
 
 		parking.validDate(notValidDay);
 		parking.setDay(notValidDay);
-		parking.ingresarVehiculo(vehiculoCarplacaWithA);
+		parking.ingresarVehiculoFactura(vehiculoCarplacaWithA);
 		
 	}
 	
 	@Test(expected =RegisteredVehicleException.class)
 	public void checkInVehicleRegistered()  throws DomainException{
 		
-		when(repositorio.findByPlaca("RRO789")).thenReturn(vehiculoCar);
+		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(facturaCar);
 		Vehiculo vehiculoRegistered = new Vehiculo("CARRO","RRO789",0);
 		
-		parking.ingresarVehiculo(vehiculoRegistered);
+		parking.ingresarVehiculoFactura(vehiculoRegistered);
 	}
 	
 	@Test
 	public void testAllVehicles(){
-		List<Vehiculo>vehiculos = new ArrayList<Vehiculo>();
-		vehiculos.add(vehiculoCar);
+		List<Factura>vehiculos = new ArrayList<Factura>();
+		vehiculos.add(facturaCar);
 		
-		when(repositorio.findAll()).thenReturn(vehiculos);
-		RespuestaParaControlador<List<Vehiculo>> responseController = parking.findAll();
+		when(repositorioFactura.findAll()).thenReturn(vehiculos);
+		List<Factura> responseController = parking.todasFacturas();
 		
-		assertFalse(responseController.getDato().isEmpty());
+		assertFalse(responseController.isEmpty());
 	}
 	
-	@Test
-	public void testAllVehiclesNotVehicles(){
-		List<Vehiculo>vehiculos = new ArrayList<Vehiculo>();
 		
-		
-		when(repositorio.findAll()).thenReturn(vehiculos);
-		RespuestaParaControlador<List<Vehiculo>> responseController = parking.findAll();
-		
-		assertEquals(responseController.getMensage(),ConstantesMensajes.NOT_VEHICLES);
-	}
-	
 	
 	
 	@Test 

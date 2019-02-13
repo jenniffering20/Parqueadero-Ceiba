@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
-import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
+import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 
 public class FacturaI implements BillService {
@@ -15,37 +15,40 @@ public class FacturaI implements BillService {
 	public FacturaI() {
 		super();
 	}
-	
-	
-
 	@Override
-	public Vehiculo goOut(Vehiculo vehiculoSalida) {
+	public Factura goOutt(Factura vehiculoSalida) {
 		
 		PaymentCalculation payment=new PaymentCalculation();
 		
 		BigDecimal paymentCalculation;
 		long horas = calculateStay(vehiculoSalida.getFechaIngreso(), vehiculoSalida.getFechaSalida());
 		
-		if(vehiculoSalida.getTipo().equalsIgnoreCase(ConstantesMensajes.CARRO)) {
+		if(vehiculoSalida.getVehiculo().getTipo().equalsIgnoreCase(ConstantesMensajes.CARRO)) {
 			
 			paymentCalculation = payment.paymentCalculationCar(horas);
 		}else {
-			paymentCalculation = payment.paymentCalculationMoto(horas, vehiculoSalida.getCilindraje());
+			paymentCalculation = payment.paymentCalculationMoto(horas, vehiculoSalida.getVehiculo().getCilindraje());
 		}
 		
 		vehiculoSalida.setTotalPago(paymentCalculation);
-		vehiculoSalida.setTipo("_"+vehiculoSalida.getTipo());
 		vehiculoSalida.setPlaca(vehiculoSalida.getPlaca()+"s");
-		
+		vehiculoSalida.getVehiculo().setTipo("_"+ vehiculoSalida.getVehiculo().getTipo());
 		return vehiculoSalida;
 	}
+	
+	
+
+	
 
 
 	public long calculateStay(LocalDateTime fechaEntrada, LocalDateTime fechaSalida) {
 		
 		return Duration.between(fechaEntrada,fechaSalida).toMinutes();
+		
+		
 	}
 	
+		
 	
 
 }
