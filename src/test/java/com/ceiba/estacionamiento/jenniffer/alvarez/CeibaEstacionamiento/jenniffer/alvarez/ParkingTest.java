@@ -24,6 +24,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.logic.Parqueadero;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioFactura;
+import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 
 
@@ -219,7 +220,6 @@ public class ParkingTest {
 		Vehiculo vehiculo= new Vehiculo("CARRO","RRO789",0);
 		parking.ingresarVehiculoFactura(vehiculo);
 		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(facturaCar);
-		
 		Factura factura=parking.encontrarFactura(vehiculo.getPlaca());
 		
 		assertEquals(vehiculo.getPlaca(),factura.getPlaca());

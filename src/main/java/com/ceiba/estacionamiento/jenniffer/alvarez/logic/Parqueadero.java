@@ -14,7 +14,6 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.model.ConstantesMensajes;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Vehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.model.Factura;
 import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioFactura;
-import com.ceiba.estacionamiento.jenniffer.alvarez.repo.RepositorioVehiculo;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.BillService;
 import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 import java.util.List;
@@ -27,8 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CrossOrigin("*")
 public class Parqueadero implements ParkingService {
 
-	@Autowired
-	RepositorioVehiculo repositorioVehiculo;
+
 	
 	@Autowired
 	RepositorioFactura repositorioFactura;
@@ -137,7 +135,6 @@ public class Parqueadero implements ParkingService {
 			Factura facturaVehiculo = new Factura(vehiculo.getPlaca(),newVehiculo);
 			facturaVehiculo.setFechaIngreso(getDay());
 			repositorioFactura.save(facturaVehiculo);
-			//repositorioVehiculo.save(newVehiculo);
 			
 			UpdateNumberOfVehicles();
 			
