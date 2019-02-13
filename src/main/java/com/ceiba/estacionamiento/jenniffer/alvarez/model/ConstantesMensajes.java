@@ -1,13 +1,9 @@
 package com.ceiba.estacionamiento.jenniffer.alvarez.model;
 
-public class ConstantesMensajes {
+public final class ConstantesMensajes {
 	
 	
 	
-	
-	public ConstantesMensajes() {
-		super();
-	}
 	public static final String FULL_MESSAGE = "El estacionamiento no tiene espacio disponible";
 	public static final String NOT_VALID_TYPE ="Seleccionar un tipo de vehiculo";
 	public static final String REGISTERED_MESSAGE = "la Placa ya se encuentra registrada, verificar";
