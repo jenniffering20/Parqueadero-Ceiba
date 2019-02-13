@@ -1,5 +1,8 @@
 package com.ceiba.estacionamiento.jenniffer.avlarez.testIntegration;
-
+public class ParqueaderoIntegracinTest{
+	
+}
+/*
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -24,7 +27,7 @@ import com.ceiba.estacionamiento.jenniffer.alvarez.service.ParkingService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= {Application.class})
 public class ParqueaderoIntegracinTest {
-	/*
+	
 	@Autowired
     private ParkingService parkingService;
 	
@@ -82,8 +85,9 @@ public class ParqueaderoIntegracinTest {
 	    
 	  
 	    
-	  */
+	  
 
 	
 
 }
+*/
