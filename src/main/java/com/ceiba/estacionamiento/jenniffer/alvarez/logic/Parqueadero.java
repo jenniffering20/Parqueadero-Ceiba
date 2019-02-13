@@ -38,6 +38,7 @@ public class Parqueadero implements ParkingService {
 	int fullCarros;
 	int fullMotos;
 	private LocalDateTime dia;
+	private String placaVacia="";
 
 	public LocalDateTime getDay() {
 		return dia;
@@ -115,7 +116,7 @@ public class Parqueadero implements ParkingService {
 	
 	@Override
 	public void ingresarVehiculoFactura(Vehiculo vehiculo) throws DomainException {
-		if (vehiculo.getTipo().equals("")) {
+		if (vehiculo.getTipo().equals(placaVacia)) {
 			throw new TypeInvalidException();
 		}
 
