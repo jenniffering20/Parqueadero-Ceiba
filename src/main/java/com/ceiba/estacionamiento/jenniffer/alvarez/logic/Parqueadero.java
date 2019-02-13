@@ -117,7 +117,7 @@ public class Parqueadero implements ParkingService {
 	
 	@Override
 	public void ingresarVehiculoFactura(Vehiculo vehiculo) throws DomainException {
-		if (vehiculo.getTipo() == "") {
+		if (vehiculo.getTipo().equals("")) {
 			throw new TypeInvalidException();
 		}
 
@@ -137,7 +137,7 @@ public class Parqueadero implements ParkingService {
 			Factura facturaVehiculo = new Factura(vehiculo.getPlaca(),newVehiculo);
 			facturaVehiculo.setFechaIngreso(getDay());
 			repositorioFactura.save(facturaVehiculo);
-			repositorioVehiculo.save(newVehiculo);
+			//repositorioVehiculo.save(newVehiculo);
 			
 			UpdateNumberOfVehicles();
 			

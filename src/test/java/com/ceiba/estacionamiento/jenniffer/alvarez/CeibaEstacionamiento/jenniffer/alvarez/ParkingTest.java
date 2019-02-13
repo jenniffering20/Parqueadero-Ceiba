@@ -213,6 +213,20 @@ public class ParkingTest {
 	}
 	
 	@Test
+	public void checkInVehicleOk()  throws DomainException{
+		
+		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(null);
+		Vehiculo vehiculo= new Vehiculo("CARRO","RRO789",0);
+		parking.ingresarVehiculoFactura(vehiculo);
+		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(facturaCar);
+		
+		Factura factura=parking.encontrarFactura(vehiculo.getPlaca());
+		
+		assertEquals(vehiculo.getPlaca(),factura.getPlaca());
+		
+	}
+	
+	@Test
 	public void testAllVehicles(){
 		List<Factura>vehiculos = new ArrayList<Factura>();
 		vehiculos.add(facturaCar);
