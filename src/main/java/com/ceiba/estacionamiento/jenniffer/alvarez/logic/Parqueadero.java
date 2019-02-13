@@ -103,7 +103,7 @@ public class Parqueadero implements ParkingService {
 		
 	}
 
-	public void UpdateNumberOfVehicles() {
+	public void updateNumberOfVehicles() {
 		Long cantidadVehiculosCarros = repositorioFactura.countByVehiculoTipo("carro");
 		Long cantidadVehiculosMotos = repositorioFactura.countByVehiculoTipo("moto");
 		setFullCarros(cantidadVehiculosCarros);
@@ -137,7 +137,7 @@ public class Parqueadero implements ParkingService {
 			facturaVehiculo.setFechaIngreso(getDay());
 			repositorioFactura.save(facturaVehiculo);
 			
-			UpdateNumberOfVehicles();
+			updateNumberOfVehicles();
 			
 		}else {
 			throw new RegisteredVehicleException();
@@ -155,7 +155,7 @@ public class Parqueadero implements ParkingService {
 	
 		Factura facturaToUpdate = bill.goOutt(facturaVehiculo);
 		repositorioFactura.save(facturaToUpdate);
-		UpdateNumberOfVehicles();
+		updateNumberOfVehicles();
 		return facturaToUpdate;
 	}
 	
