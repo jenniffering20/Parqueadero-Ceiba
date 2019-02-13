@@ -2,7 +2,9 @@ package com.ceiba.estacionamiento.jenniffer.alvarez.model;
 
 public final class ConstantesMensajes {
 	
-	
+	private ConstantesMensajes() {
+		
+	}
 	
 	public static final String FULL_MESSAGE = "El estacionamiento no tiene espacio disponible";
 	public static final String NOT_VALID_TYPE ="Seleccionar un tipo de vehiculo";
