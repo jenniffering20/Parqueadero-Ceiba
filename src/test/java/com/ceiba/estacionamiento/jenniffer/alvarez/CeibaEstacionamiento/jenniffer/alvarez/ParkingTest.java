@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import org.junit.Before;
 import org.junit.Test;
@@ -222,6 +223,20 @@ public class ParkingTest {
 		assertFalse(responseController.isEmpty());
 	}
 	
+	@Test
+	public void testSalidaVehiculoOk() throws DomainException{
+		LocalDateTime fechaEntrada = LocalDateTime.of(2019, 2, 4, 10, 00);
+		facturaCar.setFechaIngreso(fechaEntrada);
+		LocalDateTime fechaSalida = LocalDateTime.of(2019, 2, 4, 12, 00);
+		facturaCar.setFechaSalida(fechaSalida);
+		
+		when(repositorioFactura.findByPlaca("RRO789")).thenReturn(facturaCar);
+		
+		
+		Factura factura= parking.facturacionVehiculoSalida("RRO789");
+		assertEquals("RRO789s",factura.getPlaca() );
+		
+	}
 		
 	
 	
