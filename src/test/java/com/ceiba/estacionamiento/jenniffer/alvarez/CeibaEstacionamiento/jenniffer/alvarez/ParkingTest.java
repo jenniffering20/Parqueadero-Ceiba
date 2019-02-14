@@ -171,6 +171,30 @@ public class ParkingTest {
 	}
 	
 	@Test
+	public void restriccionplacasInicianConAyDiaInvalido() {
+	LocalDateTime day= LocalDateTime.now();
+	LocalDateTime notValidDay = day.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+	Vehiculo vehiculoCarplacaWithA = new Vehiculo("CARRO","ARO789",0);
+
+	parking.validDate(notValidDay);
+	parking.setDay(notValidDay);
+	Boolean restrictionLetter= parking.restriccionPlacasQueInicianConLetraA(vehiculoCarplacaWithA.getPlaca());
+	assertTrue(restrictionLetter);
+	}
+	
+	@Test
+	public void restriccionplacasInicianConAyDiavalido() {
+	LocalDateTime day= LocalDateTime.now();
+	LocalDateTime notValidDay = day.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+
+	parking.validDate(notValidDay);
+	parking.setDay(notValidDay);
+	Boolean restrictionLetter= parking.restriccionPlacasQueInicianConLetraA("PRO789");
+	assertFalse(restrictionLetter);
+	}
+	
+	
+	@Test
 	public void restrictionLetterNotOk() {
 		
 		Boolean restrictionLetter = parking.restriccionPlacasQueInicianConLetraA("B");
@@ -203,6 +227,7 @@ public class ParkingTest {
 		parking.ingresarVehiculoFactura(vehiculoCarplacaWithA);
 		
 	}
+	
 	
 	@Test(expected =RegisteredVehicleException.class)
 	public void checkInVehicleRegistered()  throws DomainException{

@@ -112,7 +112,6 @@ public class Parqueadero implements ParkingService {
 	}
 
 	
-	//NUEVO RETORNA FACTURA
 	
 	@Override
 	public void ingresarVehiculoFactura(Vehiculo vehiculo) throws DomainException {
@@ -142,7 +141,6 @@ public class Parqueadero implements ParkingService {
 		}else {
 			throw new RegisteredVehicleException();
 		}
-		
 		
 	}
 	
